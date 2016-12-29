@@ -1,0 +1,10 @@
+{% autoescape false %}
+Hi, {{ user.getFirstname() }}
+
+We'd love to have you here.
+There is only one step to finish registration. Just click the link below.
+
+{{ confirmationUrl }}
+
+{% include "WebDNAUserBundle:Default:email_footer.text.twig" %}
+{% endautoescape %}

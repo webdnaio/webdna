@@ -1,0 +1,47 @@
+{% extends "WebDNAAppBundle:UserWorkbench:base.html.twig" %}
+
+{% block meta_title %}Web DNA - {{ 'Download disavow for ' ~ website.name }} toxic link report{% endblock %}
+
+{% block breadcrumbs %}
+    {{ breadcrumbs.crumb(
+    {
+        'analysis': {'name':  website.name ~ ' analysis', 'href': path('user_workbench_report_table', {website: website.id}), 'active': '0'},
+        'index': {'name':  'Disavow history', 'href': path('user_workbench_disavow_index', {analysisProcess: analysisProcess.id}), 'active': '0'},
+        'download': {'name': 'Disavow download page', 'active': '1'}
+    }
+    ) }}
+{% endblock %}
+
+{% block page_header %}
+    {% if website is defined %}
+        <h1>Toxic link report for {{ website.name }}</h1>
+    {% endif %}
+{% endblock %}
+
+{% block main_content %}
+    <script>
+            window.setTimeout(function() {
+                window.location = '{{ url('user_workbench_disavow_download', {'analysisProcess' : analysisProcess.id, 'type': 'txt'}) }}';
+            }, 1000);
+    </script>
+    <div class="row" style="margin-top: 30px;">
+        <div class="col-md-8 col-md-offset-2">
+            <p class="alert alert-info h4">
+                Once you download disavow file you need to upload it in Google Webmaster Tools
+                You can find detailed instruction how to do
+                <a href="https://support.google.com/webmasters/answer/2648487?hl=en" target="_blank">here</a>.
+            </p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8"></div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2 text-center">
+            <a href="{{ path('user_workbench_dashboard_index') }}" class="btn btn-lg btn-primary">
+                Go to dashboard</a>
+        </div>
+    </div>
+{% endblock %}

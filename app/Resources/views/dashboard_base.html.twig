@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>{% block meta_title %}Web DNA app for SEO | Control Your Digital Footprint{% endblock %}</title>
+    <meta name="robots" content="index,follow">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="{{ asset('bundles/webdnaapp/shared/img/favicon.png') }}">
+    <meta name="description"
+          content="Audit your SEO performance. Disavow toxic links. Web DNA is a big data app, that helps website owners, and webmasters in their everyday work. It allows you to verify the work of your SEO specialist or agency"/>
+    <link href="//fonts.googleapis.com/css?family=Muli:300,400" rel="stylesheet" type="text/css">
+
+    {% block stylesheets %}
+        {% stylesheets filter='cssrewrite'
+        'bundles/webdnaapp/shared/plugins/bootstrap/dist/css/bootstrap.min.css'
+        'bundles/webdnaapp/shared/plugins/font-awesome/css/font-awesome.min.css'
+        'bundles/webdnaapp/shared/plugins/admin-lte/dist/css/AdminLTE.min.css'
+        'bundles/webdnaapp/shared/plugins/admin-lte/dist/css/skins/skin-black.min.css'
+        '@WebDNAAppBundle/Resources/public/frontend/css/dashboard.css'
+        '@WebDNAAppBundle/Resources/public/frontend/css/core.css' %}
+
+        <link rel="stylesheet" href="{{ asset_url }}" type="text/css"/>
+        {% endstylesheets %}
+    {% endblock %}
+
+    {% block header_scripts %}
+        {% javascripts
+        '@WebDNAAppBundle/Resources/public/shared/plugins/jquery/dist/jquery.min.js'
+        '@WebDNAAppBundle/Resources/public/shared/plugins/bootstrap/dist/js/bootstrap.min.js' %}
+        <script src="{{ asset_url }}" type="text/javascript"></script>
+        {% endjavascripts %}
+        <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+        <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
+    {% endblock %}
+</head>
+
+<body class="skin-black">
+<div class="wrapper">
+    {% if app.environment == 'prod' %}
+        {% include 'WebDNAAppBundle:Common:trackers.html.twig' %}
+    {% endif %}
+
+    {% block header %}
+        {% include 'WebDNAAppBundle:UserWorkbench/Dashboard:navbar.html.twig' %}
+    {% endblock %}
+
+    <aside class="main-sidebar">
+        <section class="sidebar">
+            {% block sidebar_menu_content %}
+                <ul class="sidebar-menu">
+                    <li class="header">CONTROL YOUR DIGITAL FOOTPRINT</li>
+                    <li>
+                        <a href="{{ path('user_workbench_dashboard_index') }}">
+                            <i class="fa fa-dashboard"></i> <span>Dashboard</span>
+                        </a>
+                        {% block dashboard_submenu %}{% endblock %}
+                    </li>
+                    {% if reportType is not defined %}
+                        <li>
+                            <a href="{{ path('user_workbench_website_add') }}">
+                                <i class="fa fa-th"></i> <span>Add a website</span>
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            {% endblock %}
+            {% block dashboard_report_menu %}{% endblock %}
+            <ul class="sidebar-menu">
+                <li>
+                    <a href="/docs/manual.pdf" target="_blank">
+                        <i class="fa fa-book"></i>
+                        User manual</a>
+                </li>
+            </ul>
+        </section>
+    </aside>
+
+    <div class="content-wrapper">
+        <section class="content-header">
+            {% block page_header %}{% endblock %}
+            {% block breadcrumbs %}{% endblock %}
+        </section>
+        <section class="content">
+            {% block flash_messages %}{% endblock %}
+            {% block main_content %}{% endblock %}
+        </section>
+    </div>
+</div>
+
+{% block footer %}{% include 'WebDNAAppBundle:AdminWorkbench:footer.html.twig' %}{% endblock %}
+
+{% block footer_scripts %}
+    {% javascripts
+    '@WebDNAAppBundle/Resources/public/shared/plugins/js-cookie/src/js.cookie.js'
+    '@WebDNAAppBundle/Resources/public/frontend/js/workbench/app.min.js'
+    '@WebDNAAppBundle/Resources/public/shared/plugins/admin-lte/plugins/fastclick/fastclick.js' %}
+    <script src="{{ asset_url }}" type="text/javascript"></script>
+    {% endjavascripts %}
+{% endblock %}
+
+</body>
+</html>

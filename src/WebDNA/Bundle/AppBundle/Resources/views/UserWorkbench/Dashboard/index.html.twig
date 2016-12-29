@@ -1,0 +1,109 @@
+{% import "WebDNAAppBundle:UserWorkbench/Report/partials/table/macros:process.html.twig" as process %}
+
+{% extends "WebDNAAppBundle:UserWorkbench:base.html.twig" %}
+
+{% set analysis_status_completed = constant('WebDNA\\Bundle\\AppBundle\\Entity\\AnalysisProcess::STATUS_COMPLETED') %}
+{% set analysis_status_preparing = constant('WebDNA\\Bundle\\AppBundle\\Entity\\AnalysisProcess::STATUS_PREPARING') %}
+
+{% block header_scripts %}
+    {{ parent() }}
+    {% javascripts
+    '@WebDNAAppBundle/Resources/public/frontend/js/workbench/dashboard.js'
+    '@WebDNAAppBundle/Resources/public/shared/plugins/handlebars/handlebars.min.js'
+    '@WebDNAAppBundle/Resources/public/shared/plugins/momentjs/min/moment.min.js'
+    %}
+    <script src="{{ asset_url }}" type="text/javascript"></script>
+    {% endjavascripts %}
+{% endblock %}
+
+{% block page_header %}
+    {% if websites_list is defined and websites_list.items|length > 0 %}
+        <h1>Websites</h1>
+    {% endif %}
+{% endblock %}
+
+{% block main_content %}
+    {% verbatim %}
+        <script id="websites-list-template" type="text/x-handlebars-template">
+            <div class="list-group">
+
+                {{#each items}}
+                    <a class="list-group-item" href="{{getUrlByAnalysisStatus ap_status id ap_id}}">
+                        <div class="pull-right">
+                            {{#isAnalysisCompleted ap_status}}
+                                <div>
+                                    <button class="btn btn-sm btn-success">
+                                        view results
+                                    </button>
+                                </div>
+                            {{/isAnalysisCompleted}}
+
+                            {{#isAnalysisPreparing ap_status}}
+                                <div>
+                                    <button class="btn btn-sm btn-warning">
+                                        select backlinks source
+                                    </button>
+                                </div>
+                            {{/isAnalysisPreparing}}
+
+                            {{#isAnalysisInProgress ap_status}}
+                                <div>
+                                    <i class="glyphicon glyphicon-time"></i>
+                                    analysis in progress
+                                </div>
+
+                                <div>
+                                    <div class="text-muted">
+                                        {{#isCounterInitialised ap_id}}
+                                        <small>
+                                            {{getCountProcessed ap_id}} of {{getTotalCount ap_id}}
+                                            pages have been analysed
+                                        </small>
+                                        {{/isCounterInitialised}}
+                                    </div>
+                                    <progress id="progress_{{id}}" max="{{getTotalCount ap_id}}" value="{{getCountProcessed ap_id}}"></progress>
+                                </div>
+                            {{/isAnalysisInProgress}}
+
+                        </div>
+                        <h4 class="list-group-item-heading">{{ name }}</h4>
+
+                        <div class="list-group-item-text text-muted">
+                            {{#isAnalysisInProgress ap_status}}
+                                <div>
+                                    {{#if ap_created}}
+                                    analysis process started <span
+                                            title="{{ ap_created }}">{{dateFromNow ap_created }}</span>
+                                    {{/if}}
+                                </div>
+                            {{/isAnalysisInProgress}}
+
+                            {{#isAnalysisCompleted ap_status}}
+                                <div>
+                                    {{#if ap_finished}}
+                                    analysis process completed <span
+                                            title="{{ ap_finished }}">{{dateFromNow ap_finished}}</span>
+                                    {{/if}}
+                                </div>
+                            {{/isAnalysisCompleted}}
+                        </div>
+                    </a>
+                {{/each}}
+            </div>
+        </script>
+    {% endverbatim %}
+    <div class="row">
+        <div class="col-md-12">
+            <div id="websites-list"></div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block footer_scripts %}
+    {{ parent() }}
+    <script>
+        WebDNADashboard.initHandlebarsHelpers();
+        WebDNADashboard.getWebsites();
+        setInterval('WebDNADashboard.getWebsites()', 8000);
+    </script>
+{% endblock %}

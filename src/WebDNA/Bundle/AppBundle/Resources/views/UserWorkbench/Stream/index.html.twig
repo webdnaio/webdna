@@ -1,0 +1,32 @@
+{% extends "WebDNAAppBundle:UserWorkbench:base.html.twig" %}
+
+{% block breadcrumbs %}
+    {{ breadcrumbs.crumb({ 'user_workbench_stream': {'name': 'Events history for ' ~ website.name, 'active': '1'} }) }}
+{% endblock %}
+
+{% block page_header %}
+    <h1>Events history for website {{ website.name }}</h1>
+{% endblock %}
+
+{% block main_content %}
+    <ul class="timeline">
+        {% set date = null %}
+
+        {% for event in events %}
+            {% if date != event.created|date('Y-m-d') %}
+                {% set date = event.created|date('Y-m-d') %}
+
+                <li class="time-label">
+                    <span class="bg-red">
+                        {{ date }}
+                    </span>
+                </li>
+            {% endif %}
+
+            {% include 'WebDNAAppBundle:UserWorkbench/Stream/events:' ~ class_name(event, false) ~ '.html.twig' with {'event': event} %}
+        {% endfor %}
+        <li>
+            <i class="fa fa-clock-o bg-gray"></i>
+        </li>
+    </ul>
+{% endblock %}

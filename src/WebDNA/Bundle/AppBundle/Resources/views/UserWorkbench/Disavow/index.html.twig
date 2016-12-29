@@ -1,0 +1,150 @@
+{% extends "WebDNAAppBundle:UserWorkbench:base.html.twig" %}
+
+{% block meta_title %}Web DNA - {{ 'Download disavow for ' ~ website.name }} toxic link report{% endblock %}
+
+{% block breadcrumbs %}
+    {{ breadcrumbs.crumb(
+    {
+        'analysis': {'name':  website.name ~ ' analysis', 'href': path('user_workbench_report_table', {website: website.id}), 'active': '0'},
+        'download': {'name': 'Disavow download', 'active': '1'}
+    }
+    ) }}
+{% endblock %}
+
+{% block page_header %}
+    {% if website is defined %}
+        <h1>Download disavow for {{ website.name }}</h1>
+    {% endif %}
+{% endblock %}
+
+{% block main_content %}
+
+    {% set all_links_count     = analysisProcessSummary.positive + analysisProcessSummary.negative + analysisProcessSummary.suspicious %}
+    {% set good_links_percent  = analysisProcessSummary.positive / all_links_count*100 %}
+    {% set suspicious_links_percent  = analysisProcessSummary.suspicious / all_links_count*100 %}
+    {% set toxic_links_percent = analysisProcessSummary.negative / all_links_count*100 %}
+    <div class="row">
+        <div class="col-md-8 col-md-offset-1">
+
+            <div class="box">
+                <div class="box-body">
+                    <div class="row">
+                        <!-- /.col -->
+                        <div class="col-sm-3 col-xs-6">
+                            <div class="description-block border-right">
+                                <h5 class="description-header"><i
+                                            class="fa fa-flag-o"></i> {{ analysisProcessSummary.negative }}</h5>
+                                <span class="description-text">Possible toxic links</span>
+                            </div>
+                            <!-- /.description-block -->
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-sm-3 col-xs-6">
+                            <div class="description-block border-right">
+                                <span class="description-percentage text-green">{{ good_links_percent|number_format(2, '.', '') }}
+                                    %</span>
+                                <h5 class="description-header"></h5>
+                                <span class="description-text">are good</span>
+                            </div>
+                            <!-- /.description-block -->
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-sm-3 col-xs-6">
+                            <div class="description-block border-right">
+                                <span class="description-percentage text-warning">{{ suspicious_links_percent|number_format(2, '.', '') }}
+                                    %</span>
+                                <h5 class="description-header"></h5>
+                                <span class="description-text">are suspicious</span>
+                            </div>
+                            <!-- /.description-block -->
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-sm-3 col-xs-6">
+                            <div class="description-block">
+                                <span class="description-percentage text-red">{{ toxic_links_percent|number_format(2, '.', '') }}
+                                    %</span>
+                                <h5 class="description-header"></h5>
+                                <span class="description-text">may harm your website position</span>
+                            </div>
+                            <!-- /.description-block -->
+                        </div>
+                    </div>
+                    <!-- /.row -->
+                </div>
+                <!-- ./box-body -->
+            </div>
+        </div>
+    </div>
+
+    {% if analysisProcessSummary.negative > 0 %}
+    <div class="row">
+        <div class="col-md-10 text-center">
+            <h3>You can download and submit Disavow File to Google</h3>
+            <h4>
+                <a href="https://support.google.com/webmasters/answer/2648487?hl=en" target="_blank">see
+                    instructions</a>
+            </h4>
+        </div>
+    </div>
+    <div class="row" style="margin-top: 40px;">
+        <div class="col-md-10 text-center">
+            <ul class="list-inline">
+                <li>
+                    <a style="width: 240px;" class="btn btn-lg btn-danger"
+                       href="{{ path('user_workbench_disavow_download_landing_page', {'analysisProcess' : analysisProcess.id, 'type': 'txt'}) }}">
+                        <i class="fa fa-download"></i>
+                        Download disavow file
+                    </a>
+                </li>
+                <li>
+                    <a style="width: 240px;" class="btn btn-lg btn-danger"
+                       href="{{ path('user_workbench_disavow_download_landing_page', {'analysisProcess' : analysisProcess.id, 'type': 'xls'}) }}">
+                        <i class="fa fa-file-excel-o"></i>
+                        Download XLS with data
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    {% endif %}
+    <div class="row" style="margin-top: 40px;">
+        <div class="col-md-10 text-center">
+            <a class="btn btn-lng btn-primary"
+               href="{{ path('user_workbench_report_table', { website: website.id, analysisProcess: analysisProcess.id }) }}">Browse
+                toxic links</a>
+        </div>
+    </div>
+    {% if history %}
+        <div class="row" style="margin-top: 40px;">
+            <div class="col-md-6 col-md-offset-2">
+                <div class="box box-info">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Disavow download archive</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <div class="table-responsive">
+                            <table class="table no-margin">
+                                {% for entry in history %}
+                                    <tr>
+                                        <td>
+                                            {{ entry.getCreatedAt()|date("Y-m-d H:i") }}
+                                        </td>
+                                        <td>
+                                            <a class="pull-right btn btn-primary btn-sm"
+                                               href="{{ path('user_workbench_disavow_download_history', {'analysisProcess' : analysisProcess.id, 'id': entry.getId()}) }}">download</a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </table>
+                        </div>
+                        <!-- /.table-responsive -->
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+            </div>
+        </div>
+    {% endif %}
+
+{% endblock %}

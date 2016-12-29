@@ -1,0 +1,46 @@
+{% extends 'WebDNAVerifierBundle:Default:base.html.twig' %}
+
+{% block stylesheets %}
+    {% if page %}
+        {% stylesheets filter='cssrewrite'
+        'bundles/webdnaverifier/css/main.css' %}
+        <link rel="stylesheet" href="{{ asset_url }}" type="text/css"/>
+        {% endstylesheets %}
+    {% else %}
+        {% stylesheets filter='cssrewrite'
+        'bundles/webdnaapp/shared/plugins/bootstrap/dist/css/bootstrap.min.css' %}
+        <link rel="stylesheet" href="{{ asset_url }}" type="text/css"/>
+        {% endstylesheets %}
+    {% endif %}
+{% endblock %}
+
+{% block header_scripts %}
+    {% if page %}
+        <script>
+            window.onbeforeunload = function (event) {
+                event = event || window.event;
+                var confirmClose = 'Strona chce zamknąć ramkę, co robić?';
+                // For IE and Firefox prior to version 4
+                if (event) {
+                    event.returnValue = confirmClose;
+                }
+                // For Safari
+                return confirmClose;
+            };
+        </script>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    {% if page %}
+        <iframe id="navbar_frame"
+                src="{{ url('link-verification-tool-navbar', {id: page.id, url: page.getUrl()|url_encode, domain: domain, websiteId: websiteId}) }}"
+                style=""></iframe>
+        <iframe id="page_frame"
+                src="{{ page.getUrl() }}"></iframe>
+    {% else %}
+        <div class="center-block">
+            <div class="alert alert-info text-center">There are no more urls to verify at the moment</div>
+        </div>
+    {% endif %}
+{% endblock %}

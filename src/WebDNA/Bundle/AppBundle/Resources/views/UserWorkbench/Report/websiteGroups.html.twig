@@ -1,0 +1,114 @@
+{% extends "WebDNAAppBundle:UserWorkbench/Report:index.html.twig" %}
+
+{% block meta_title %}Web DNA - {{ website.name }} toxic link report{% endblock %}
+
+{% block page_header %}
+    {% if website is defined %}
+        <h1>Toxic link report for {{ website.name }}</h1>
+    {% endif %}
+{% endblock %}
+
+{% block breadcrumbs %}
+    {{ breadcrumbs.crumb({ 'dashboard_website_check': {'name': website.name, 'active': '1'} }) }}
+{% endblock %}
+
+{% block main_content %}
+    {% if analysisProcessSummary is defined
+    and analysisProcessSummary.analyzedDomains is defined and analysisProcessSummary.analyzedDomains > 0 %}
+
+{#
+        {% include "WebDNAAppBundle:UserWorkbench/Report/partials/table:stats.html.twig" %}
+#}
+
+        <div class="nav-tabs-custom">
+
+            <div class="tab-content">
+                {% if pageItemAnalyzes.count > 0 %}
+                    <table id="report_table" class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Total urls
+                                <a class="fa fa-arrow-down" href="{{ path('user_workbench_website_groups', { website: website.id, analysisProcess: analysisProcess.id }) }}?column=itemCount&order=desc"></a>
+                                <a class="fa fa-arrow-up" href="{{ path('user_workbench_website_groups', { website: website.id, analysisProcess: analysisProcess.id }) }}?column=itemCount&order=asc"></a>
+                            </th>
+                            <th>Positive urls
+                                <a class="fa fa-arrow-down" href="{{ path('user_workbench_website_groups', { website: website.id, analysisProcess: analysisProcess.id }) }}?column=positive&order=desc"></a>
+                                <a class="fa fa-arrow-up" href="{{ path('user_workbench_website_groups', { website: website.id, analysisProcess: analysisProcess.id }) }}?column=positive&order=asc"></a>
+                            </th>
+                            <th>Suspicious urls
+                                <a class="fa fa-arrow-down" href="{{ path('user_workbench_website_groups', { website: website.id, analysisProcess: analysisProcess.id }) }}?column=suspicious&order=desc"></a>
+                                <a class="fa fa-arrow-up" href="{{ path('user_workbench_website_groups', { website: website.id, analysisProcess: analysisProcess.id }) }}?column=suspicious&order=asc"></a>
+                            </th>
+                            <th>Negative urls
+                                <a class="fa fa-arrow-down" href="{{ path('user_workbench_website_groups', { website: website.id, analysisProcess: analysisProcess.id }) }}?column=negative&order=desc"></a>
+                                <a class="fa fa-arrow-up" href="{{ path('user_workbench_website_groups', { website: website.id, analysisProcess: analysisProcess.id }) }}?column=negative&order=asc"></a>
+                            </th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        {% for page in pageItemAnalyzes %}
+                            <tr>
+                                <td>
+                                    <a href="{{ path('user_workbench_report_table', { website: website.id, analysisProcess: analysisProcess.id }) }}?criteria[website]={{ page.website_id }}">{{ page.name }}</a>
+                                </td>
+                                <td>
+                                    {% if page.itemCount > 0 %}
+                                        <a href="{{ path('user_workbench_report_table', { website: website.id, analysisProcess: analysisProcess.id }) }}?criteria[website]={{ page.website_id }}">{{ page.itemCount }}</a>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if page.positive > 0 %}
+                                        <a href="{{ path('user_workbench_report_table', { website: website.id, analysisProcess: analysisProcess.id }) }}?criteria[website]={{ page.website_id }}&criteria[class]={{ class_positive }}">{{ page.positive }}</a>
+                                    {% else %}
+                                        0
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if page.suspicious > 0 %}
+                                        <a href="{{ path('user_workbench_report_table', { website: website.id, analysisProcess: analysisProcess.id }) }}?criteria[website]={{ page.website_id }}&criteria[class]={{ class_suspicious }}">{{ page.suspicious }}</a>
+                                    {% else %}
+                                        0
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if page.negative > 0 %}
+                                        <a href="{{ path('user_workbench_report_table', { website: website.id, analysisProcess: analysisProcess.id }) }}?criteria[website]={{ page.website_id }}&criteria[class]={{ class_negative }}">{{ page.negative }}</a>
+                                    {% else %}
+                                        0
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <h3>There are no urls for your search criteria</h3>
+                {% endif %}
+            </div>
+
+            <div class="box-footer clearfix">
+                <div class="pull-left">
+                    {{ knp_pagination_render(pageItemAnalyzes) }}
+                </div>
+            </div>
+
+        </div>
+    {% else %}
+        <div class="alert alert-warning">
+            {% if isAnyPendingAnalysis == true %}
+                Analysis in progress
+            {% else %}
+                There are no links for this site.
+            {% endif %}
+        </div>
+
+        <div class="row">
+            <div class="col-md-11 text-center">
+                <a href="{{ path('user_workbench_dashboard_index') }}" class="btn btn-lg btn-primary">
+                    Go to dashboard</a>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,22 @@
+{% macro link_action(page_id, class_value, css) %}
+    <a id="pageLinkAction_{{ page_id }}" href="#" class="classify" data-id="{{ page_id }}" data-rating="{{ class_value }}">
+        <i class="glyphicon glyphicon-{{ css }}"></i>
+    </a>
+{% endmacro %}
+
+{% macro link_status(status) %}
+
+    {% if status.links_count > 0 %}
+
+        {{ status.links_count }}
+
+        {% if status.nofollow_count > 0 %}
+            <small style="color: gray;">
+                / {{ status.nofollow_count }} nofollow
+            </small>
+        {% endif %}
+
+    {% else %}
+        <small style="color: gray;">NOT FOUND</small>
+    {% endif %}
+{% endmacro %}

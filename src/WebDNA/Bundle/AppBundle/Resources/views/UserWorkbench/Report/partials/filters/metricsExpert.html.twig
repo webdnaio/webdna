@@ -1,0 +1,112 @@
+{% import "WebDNAAppBundle:UserWorkbench/Report/partials/filters/macros:filterList.html.twig" as flist %}
+
+<ul class="list-inline">
+    <li style="vertical-align: top;">
+        <div class="btn-group">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                    aria-expanded="false"><i class="fa fa-flag"></i> Mark selected as...
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+                <li>
+                    <a tabindex="1"
+                       href="{{ path('user_workbench_report_session_mark_as_reviewed', { reviewValue: 1, analysisProcess: analysisProcess.id, website: website.id }) }}">
+                        <i class="fa fa-circle-o text-blue"></i>
+                        Reviewed</a>
+                </li>
+                <li>
+                    <a tabindex="1"
+                       href="{{ path('user_workbench_report_session_mark_as_reviewed', { reviewValue: 0, analysisProcess: analysisProcess.id, website: website.id }) }}"><i
+                                class="fa fa-circle-o text-purple"></i>
+                        Not reviewed</a>
+                </li>
+                <li class="divider"></li>
+                <li>
+                    <a tabindex="2" role="menuitem"
+                       href="{{ path('user_workbench_report_session_classify', { class: class_positive, analysisProcess: analysisProcess.id, website: website.id }) }}"><i
+                                class="fa fa-circle-o text-green"></i>
+                        Positive</a>
+                </li>
+                <li>
+                    <a tabindex="3" role="menuitem"
+                       href="{{ path('user_workbench_report_session_classify', { class: class_suspicious, analysisProcess: analysisProcess.id, website: website.id }) }}"
+                       data-rating="{{ class_suspicious }}"><i class="fa fa-circle-o text-orange"></i>
+                        Suspicious</a>
+                </li>
+                <li>
+                    <a tabindex="4" role="menuitem"
+                       href="{{ path('user_workbench_report_session_classify', { class: class_negative, analysisProcess: analysisProcess.id, website: website.id }) }}"
+                       data-rating="{{ class_negative }}"><i class="fa fa-circle-o text-red"></i>
+                        Negative</a>
+                </li>
+            </ul>
+        </div>
+    </li>
+    {% if criteria.active is defined %}
+        <li style="vertical-align: top;margin-top: 8px;">
+            <a href="#" class="resetFilters"><i class="fa fa-times"></i> Clear filters</a>
+        </li>
+    {% endif %}
+    <li>
+        <ul class="list-inline">
+            {% set filters = [
+
+            {'label': 'Found', 'filterName': 'foundLinks', 'filterValue' : 1},
+            {'label': 'Not found', 'filterName': 'foundLinks', 'filterValue' : 0},
+
+            {'label': 'Follow', 'filterName': 'foundFollow', 'filterValue' : 1},
+            {'label': 'Nofollow', 'filterName': 'foundFollow', 'filterValue' : 0},
+
+            {'label': 'Malware', 'filterName': 'malware', 'filterValue' : 1},
+
+            ] %}
+
+            {{ flist.loop(filters, criteria) }}
+
+            <li>
+                <a href="#" onclick="$('#more-filters').removeClass('hide'); $(this).parent().addClass('hide'); return false;"><i class="fa fa-ellipsis-h circle"></i></a>
+            </li>
+        </ul>
+        <ul id="more-filters" class="list-inline hide">
+
+            {#
+            {'label': 'Reviewed', 'filterName': 'reviewed', 'filterValue' : 1},
+            {'label': 'Not reviewed', 'filterName': 'reviewed', 'filterValue' : 0},
+            #}
+
+            {% set more_filters = [
+
+            {'label': 'Classified', 'filterName': 'class_user', 'filterValue' : 1},
+            {'label': 'Unclassified', 'filterName': 'class_user', 'filterValue' : 0},
+
+            {'label': '301', 'filterName': 'httpCode', 'filterValue' : 301},
+            {'label': '404', 'filterName': 'httpCode', 'filterValue' : 404},
+            {'label': '500', 'filterName': 'httpCode', 'filterValue' : 500},
+
+            {'label': 'Malware', 'filterName': 'malware', 'filterValue' : 1},
+
+            ] %}
+
+            {{ flist.loop(more_filters, criteria) }}
+        </ul>
+    </li>
+    <li class="pull-right">
+        <script>
+            $(function() {
+                $('#toogle-reviewed').change(function() {
+                    $('#criteriaForm').submit();
+                })
+            })
+        </script>
+        <input id="toogle-reviewed"
+                {% if criteria['reviewed'] is defined and criteria['reviewed'] == 1 %}
+                checked
+                {% endif %}
+               name="criteria[reviewed]" type="checkbox" value="1" data-toggle="toggle" data-on="Reviewed"
+               data-off="Not reviewed" data-onstyle="success" data-offstyle="default">
+    </li>
+</ul>
+
+
+
+

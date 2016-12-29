@@ -1,0 +1,94 @@
+{% extends "WebDNAAppBundle:AdminWorkbench:base.html.twig" %}
+
+{% block page_header %}
+    {% if users is defined and users|length > 0 %}
+        <h1>Websites</h1>
+    {% endif %}
+{% endblock %}
+
+{% block main_content %}
+
+    <div class="box">
+        <div class="box-header">
+            <div class="box-tools pull-right">
+                {{ knp_pagination_render(users) }}
+            </div>
+        </div>
+        <div class="box-body clearfix">
+            <form>
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>
+                            {{ knp_pagination_sortable(users, 'user name', 'u.username') }}
+                        </th>
+                        <th>
+                            {{ knp_pagination_sortable(users, 'last login', 'u.lastLogin') }}
+                        </th>
+                        <th>
+                            {{ knp_pagination_sortable(users, 'created at', 'u.createdAt') }}
+                        </th>
+                        <th>
+                            {{ knp_pagination_sortable(users, 'enabled', 'u.enabled') }}
+                        </th>
+                        <th>
+                            premium user
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for user in users %}
+                        <tr>
+                            <td>
+                                <a href="{{ path('user_workbench_dashboard_index') }}?{{ switch_user_param }}={{ user.username|url_encode }}">
+                                    <b>{{ user.firstName }} {{ user.lastName }}</b>
+                                    {{ user.username }}
+                                </a>
+                            </td>
+                            <td>
+                                {% if user.lastLogin %}
+                                    {{ user.lastLogin|date("Y-m-d H:i") }}
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if user.createdAt %}
+                                    {{ user.createdAt|date("Y-m-d H:i") }}
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if user.enabled %}
+                                    yes
+                                {% else %}
+                                    pending
+                                {% endif %}
+                            </td>
+                            <td>
+                                <label></label>
+                                <input class="setPremiumUser" type="checkbox"
+                                       value="{{ user.id }}"{% if 'ROLE_PREMIUM' in user.roles %} checked{% endif %} />
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </form>
+        </div>
+        <div class="box-footer clearfix">
+            <div class="pull-right">
+                {{ knp_pagination_render(users) }}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block footer_scripts %}
+    {{ parent() }}
+    <script>
+        $('.setPremiumUser').on('click', function(ev) {
+                var grant = ev.target.checked===true?1: 0,
+                    userId = ev.target.value;
+            $.get(Routing.generate('admin_workbench_dashboard_set_user_premium_xhr', {user: userId, grant: grant}));
+        });
+    </script>
+{% endblock %}

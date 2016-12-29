@@ -1,0 +1,120 @@
+{% extends "WebDNAAppBundle:AdminWorkbench:base.html.twig" %}
+
+{% block page_header %}
+    {% if analyzes is defined and analyzes|length > 0 %}
+        <h1>Analyzes</h1>
+    {% endif %}
+{% endblock %}
+
+{% block main_content %}
+
+    <div class="box">
+        <div class="box-header">
+            <div class="box-tools pull-right">
+                {{ knp_pagination_render(analyzes) }}
+            </div>
+        </div>
+        <div class="box-body clearfix">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>
+                        {{ knp_pagination_sortable(analyzes, 'website name', 'w.name') }}
+                    </th>
+                    <th>
+                        {{ knp_pagination_sortable(analyzes, 'user name', 'u.username') }}
+                    </th>
+                    <th>
+                        {{ knp_pagination_sortable(analyzes, 'status', 'ap.status') }}
+                    </th>
+                    <th>
+                        {{ knp_pagination_sortable(analyzes, 'created', 'ap.created') }}
+                    </th>
+                    <th>
+                        {{ knp_pagination_sortable(analyzes, 'finished', 'ap.finished') }}
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for analysis in analyzes %}
+                    <tr data-id="{{ analysis.id }}" class="status-{{ analysis.status }}">
+                        <td>
+                            <a href="{{ path('user_workbench_report_table', { website: analysis.website_id, analysisProcess: analysis.id }) }}?{{ switch_user_param }}={{ analysis.username|url_encode }}">{{ analysis.website_name }}</a>
+                        </td>
+                        <td>
+                            <a href="{{ path('user_workbench_dashboard_index') }}?{{ switch_user_param }}={{ analysis.username|url_encode }}">
+                                <b>{{ analysis.firstName }} {{ analysis.lastName }}</b>
+                                {{ analysis.username }}
+                            </a>
+                        </td>
+                        <td>
+                            {{ get_analysis_status_label(analysis.status) }}
+
+                            {% if analysis.status == 3 %}
+                                <div id="progress-bar-{{ analysis.id }}" class="hide">
+                                    <div class="text-muted">
+                                        <small>
+                                            <span id="counter-analysed-{{ analysis.id }}"></span> of <span id="counter-total-{{ analysis.id }}"></span>
+                                            pages have been analysed
+                                        </small>
+                                    </div>
+                                    <progress id="progress-{{ analysis.id }}" max="" value=""></progress>
+                                </div>
+                            {% endif %}
+
+                        </td>
+                        <td>
+                            {{ analysis.created|date("Y-m-d H:i") }}
+                        </td>
+                        <td>
+                            {% if analysis.finished %}
+                                {{ analysis.finished|date("Y-m-d H:i") }}
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="box-footer clearfix">
+            <div class="pull-right">
+                {{ knp_pagination_render(analyzes) }}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block footer_scripts %}
+{{ parent() }}
+<script>
+    var getAnalysesCounters = function () {
+        var analysesIds = [];
+
+        $.each($('.status-3'), function () {
+            analysesIds.push($(this).attr('data-id'));
+        });
+
+        $.post(Routing.generate('admin_workbench_dashboard_counters_xhr'),
+                {
+                    'ids': analysesIds
+                })
+                .done(function (data) {
+                    $.each(data, function(id, item) {
+                        if (item.count > 0) {
+                            var $progress = $('#progress-' + id);
+                            $('#progress-bar-' + id).removeClass('hide');
+                            $progress.attr('max', item.count);
+                            $progress.attr('value', item.countProcessed);
+                            $('#counter-total-' + id).text(item.count);
+                            $('#counter-analysed-' + id).text(item.countProcessed);
+                        }
+                    });
+                });
+    };
+
+    getAnalysesCounters();
+
+    setInterval(getAnalysesCounters, 8000);
+</script>
+{% endblock %}

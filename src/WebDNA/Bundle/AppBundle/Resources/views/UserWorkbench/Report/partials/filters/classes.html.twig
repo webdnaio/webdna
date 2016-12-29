@@ -1,0 +1,62 @@
+<div class="row" style="background-color: #ECF0F5;">
+    <div class="col-md-6" style=" margin-top: 20px;">
+        <ul class="nav nav-tabs">
+            <li{% if criteria.class is null %} class="active"{% endif %}>
+                <a data-class="reset"> <input id="radio_reset" type="radio" name="criteria[class]" value="reset"
+                            {% if criteria.class is null %} checked{% endif %}/>
+                    <label for="radio_reset"{% if criteria.class is null %} class="strong"{% endif %}>&nbsp;show
+                        all</label>
+                </a>
+            </li>
+            <li{% if criteria.class == class_positive %} class="active"{% endif %}>
+                <a data-class="{{ class_positive }}">
+                    <input id="radio_positive" type="radio" name="criteria[class]"
+                           {% if criteria.class == class_positive %}checked{% endif %}
+                           value="{{ class_positive }}"/>
+
+                    <label for="radio_positive"{% if criteria.class == class_positive %} class="strong"{% endif %}>
+                        &nbsp;positive
+                    </label>
+                </a>
+            </li>
+            <li{% if criteria.class == class_suspicious %} class="active"{% endif %}>
+                <a data-class="{{ class_suspicious }}">
+                    <input id="radio_suspicious" type="radio" name="criteria[class]"
+                           {% if criteria.class == class_suspicious %}checked{% endif %}
+                           value="{{ class_suspicious }}"/>
+
+                    <label for="radio_suspicious"{% if criteria.class == class_suspicious %} class="strong"{% endif %}>
+                        &nbsp;suspicious
+                    </label>
+                </a>
+            </li>
+            <li{% if criteria.class == class_negative %} class="active"{% endif %}>
+                <a data-class="{{ class_negative }}">
+                    <input id="radio_negative" type="radio" name="criteria[class]"
+                           {% if criteria.class == class_negative %}checked{% endif %}
+                           value="{{ class_negative }}"/>
+
+                    <label for="radio_negative"{% if criteria.class == class_negative %} class="strong"{% endif %}>
+                        &nbsp;negative
+                    </label>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="col-md-6">
+        <ul class="list-inline pull-right">
+            <li>
+                <a href="{{ path('user_workbench_report_table', { website: website.id, analysisProcess: analysisProcess.id, export: 1 }) }}"
+                   class="btn btn-default"><i class="fa fa-download"></i> export</a>
+            </li>
+
+            {% if pageItemAnalyzes.count > 0 and allPagesReviewed == false %}
+                <li>
+                    <button onclick="reportApp.markAsReviewed(this, '{{ website.id }}', '{{ analysisProcess.id }}', reportApp.getPagesIdsFromView(), 1);"
+                            class="btn btn-primary"><i class=""></i> Mark as reviewed
+                    </button>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+</div>

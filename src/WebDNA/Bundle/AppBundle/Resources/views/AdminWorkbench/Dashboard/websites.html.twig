@@ -1,0 +1,73 @@
+{% extends "WebDNAAppBundle:AdminWorkbench:base.html.twig" %}
+
+{% block page_header %}
+    {% if websites is defined and websites|length > 0 %}
+        <h1>Websites</h1>
+    {% endif %}
+{% endblock %}
+
+{% block main_content %}
+
+    <div class="box">
+        <div class="box-header">
+            <div class="box-tools pull-right">
+                {{ knp_pagination_render(websites) }}
+            </div>
+        </div>
+        <div class="box-body clearfix">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>
+                        {{ knp_pagination_sortable(websites, 'website name', 'w.name') }}
+                    </th>
+                    <th>
+                        {{ knp_pagination_sortable(websites, 'user name', 'u.username') }}
+                    </th>
+                    <th>
+                        {{ knp_pagination_sortable(websites, 'last analysis status', 'ap_status') }}
+                    </th>
+                    <th>
+                        {{ knp_pagination_sortable(websites, 'last analysis started at', 'ap_created') }}
+                    </th>
+                    <th>
+                        {{ knp_pagination_sortable(websites, 'last finished analysis', 'ap_finished') }}
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for website in websites %}
+                    <tr>
+                        <td>
+                            <a href="{{ path('user_workbench_report_table', { website: website.id, analysisProcess: website.ap_id }) }}?{{ switch_user_param }}={{ website.username|url_encode }}">{{ website.name }}</a>
+                        </td>
+                        <td>
+                            <a href="{{ path('user_workbench_dashboard_index') }}?{{ switch_user_param }}={{ website.username|url_encode }}">
+                                <b>{{ website.firstName }} {{ website.lastName }}</b>
+                                {{ website.username }}
+                            </a>
+                        </td>
+                        <td>
+                            {{ get_analysis_status_label(website.ap_status) }}
+                        </td>
+                        <td>
+                           {{ website.ap_created }}
+                        </td>
+                        <td>
+                            {% if website.ap_finished %}
+                                {{ website.ap_finished }}
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="box-footer clearfix">
+            <div class="pull-right">
+                {{ knp_pagination_render(websites) }}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

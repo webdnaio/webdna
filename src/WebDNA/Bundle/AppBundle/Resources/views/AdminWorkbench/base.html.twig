@@ -1,0 +1,33 @@
+{% extends "::dashboard_base.html.twig" %}
+
+{% block sidebar_menu_content %}
+
+    <ul class="sidebar-menu">
+        <li class="header">CONTROL PANEL</li>
+        <li>
+            <a href="{{ path('user_workbench_dashboard_index') }}">
+                <i class="fa fa-dashboard"></i> <span>User dashboard</span>
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('admin_workbench_dashboard_index') }}">
+                <i class="fa fa-star"></i> <span>Admin dashboard</span>
+            </a>
+        </li>
+        <li{% if app.request.get('_route') == 'admin_workbench_websites' %} class="active"{% endif %}>
+            <a href="{{ path('admin_workbench_websites') }}">
+                <i class="fa fa-bars"></i> <span>Websites</span>
+            </a>
+        </li>
+        <li{% if app.request.get('_route') == 'admin_workbench_analyzes' %} class="active"{% endif %}>
+            <a href="{{ path('admin_workbench_analyzes') }}">
+                <i class="fa fa-folder-o"></i> <span>Analyzes</span>
+            </a>
+        </li>
+        <li{% if app.request.get('_route') == 'admin_workbench_users' %} class="active"{% endif %}>
+            <a href="{{ path('admin_workbench_users') }}">
+                <i class="fa fa-group"></i> <span>User list</span>
+            </a>
+        </li>
+    </ul>
+{% endblock %}

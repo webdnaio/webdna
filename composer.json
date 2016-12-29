@@ -1,0 +1,131 @@
+{
+    "name": "symfony/framework-standard-edition",
+    "license": "MIT",
+    "type": "project",
+    "description": "The \"Symfony Standard Edition\" distribution",
+    "autoload": {
+        "psr-0": {
+            "": ["src/"]
+        },
+        "classmap": [
+            "vendor/juliensobrier/browshot-php/src/Browshot.php",
+            "vendor/cturbelin/rserve-php/"
+        ]
+    },
+    "repositories": [
+        {
+            "type": "package",
+            "package": {
+                "name": "juliensobrier/browshot-php",
+                "type": "component",
+                "version": "master",
+                "source": {
+                    "url": "https://github.com/juliensobrier/browshot-php.git",
+                    "type": "git",
+                    "reference": "3fededa2f92195eeac6ad2d1df09fb058eebe8f0"
+                }
+            }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "cturbelin/rserve-php",
+                "type": "component",
+                "version": "master",
+                "source": {
+                    "url": "https://github.com/cturbelin/rserve-php.git",
+                    "type": "git",
+                    "reference": "055813d828e318584f8522e20db801ea420ef6cc"
+                }
+            }
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3",
+        "symfony/symfony": "~2.4",
+        "doctrine/orm": "2.4.3",
+        "doctrine/doctrine-bundle": "~1.2",
+        "doctrine/doctrine-fixtures-bundle": "2.2.*",
+        "gedmo/doctrine-extensions": "2.3.*@dev",
+        "twig/extensions": "~1.0",
+        "symfony/assetic-bundle": "~2.3",
+        "symfony/swiftmailer-bundle": "~2.3",
+        "symfony/monolog-bundle": "2.6.*@dev",
+        "sensio/distribution-bundle": "~2.3",
+        "sensio/framework-extra-bundle": "~3.0",
+        "sensio/generator-bundle": "~2.3",
+        "incenteev/composer-parameter-handler": "~2.0",
+        "friendsofsymfony/user-bundle": "~2.0@dev",
+        "knplabs/knp-menu-bundle": "~2",
+        "knplabs/knp-menu": "2.1.*@dev",
+        "knplabs/gaufrette": "0.2.*@dev",
+        "knplabs/knp-gaufrette-bundle": "0.2.*@dev",
+        "knplabs/knp-components": "1.2.5",
+        "mlpz/mailchimp-bundle": "1.3",
+        "videlalvaro/php-amqplib": "2.4.*",
+        "novutec/domainparser": "dev-master#3f224df07e2d477f8246a7c6379286a3a84641f4",
+        "novutec/whoisparser": "dev-master#43d29eeea856f5c9635d4aedaf8d9dc445658585",
+        "juliensobrier/browshot-php": "dev-master#3fededa2f92195eeac6ad2d1df09fb058eebe8f0",
+        "oneup/uploader-bundle": "1.0.*",
+        "zendesk/zendesk_api_client_php": "dev-master#41d42e14b932301d12f580bb6cebabd883a2696a",
+        "pokap/webarchive": "dev-master#65519a475463259eac328f63117a723b70dc7d57",
+        "kriswallsmith/buzz": "dev-master#487760b05d6269a4c2c374364325326cfa65b12c",
+        "samcleaver/phpgsb": "dev-beta#020812363fcc65691465c7aafdf76abcf0eb80eb",
+        "seostats/seostats": "dev-master#03cf5f9ff5b627febe4d35751532e6ab8aaa36b6",
+        "html2text/html2text": "1.0.*",
+        "cturbelin/rserve-php": "dev-master#055813d828e318584f8522e20db801ea420ef6cc",
+        "leaseweb/memcache-bundle": "1.2.18",
+        "league/oauth2-client": "~0.3",
+        "knplabs/knp-paginator-bundle": "~2.4",
+        "snc/redis-bundle": "1.1.8",
+        "predis/predis": "0.8.x-dev",
+        "oldsound/rabbitmq-bundle": "1.6.*@dev",
+        "aws/aws-sdk-php": "2.7.*@dev",
+        "coduo/php-humanizer": "1.0.*",
+        "fguillot/picofeed": "0.1.3",
+        "friendsofsymfony/jsrouting-bundle": "^1.5"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "4.7.*@dev",
+        "squizlabs/php_codesniffer": "2.0.x-dev",
+        "behat/symfony2-extension"   : "*",
+        "behat/mink-extension"       : "*",
+        "behat/mink-selenium2-driver": "*",
+        "behat/mink-browserkit-driver": "*"
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
+            "app/console app:config-generate",
+            "bower install --allow-root"
+        ],
+        "post-update-cmd": [
+            "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
+            "app/console app:config-generate",
+            "bower install --allow-root"
+        ]
+    },
+    "config": {
+        "bin-dir": "bin",
+        "discard-changes": true
+    },
+    "extra": {
+        "symfony-app-dir": "app",
+        "symfony-web-dir": "web",
+        "symfony-assets-install": "symlink",
+        "incenteev-parameters": {
+            "file": "app/config/parameters.yml"
+        },
+        "branch-alias": {
+            "dev-master": "2.4-dev"
+        }
+    }
+}

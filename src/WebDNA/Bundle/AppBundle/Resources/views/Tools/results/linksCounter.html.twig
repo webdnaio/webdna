@@ -1,0 +1,31 @@
+<section class="content-8">
+    <div class="container">
+        <div class="imgs">
+            <img src="{{ asset('bundles/webdnaapp/frontend/startup/flat-ui/images/icons/png/Clipboard.png') }}" alt="" />
+        </div>
+        <h2>Total links: {{ linksAttrMetric.valueNumeric1 }}</h2>
+        <p>
+            Follow links: <strong>{{ linksAttrMetric.valueNumeric2 }}</strong><br />
+            Nofollow links: <strong>{{ linksAttrMetric.valueNumeric3 }}</strong>
+        </p>
+        <div class="row text-left p-t-30">
+            <div class="col-sm-5 col-sm-offset-1">
+                <h5>Your website link distribution</h5>
+                <p class="p-t-20">
+                    Links in top part of page: {{ linksDistributionMetric.valueNumeric1 }}<br />
+                    Links in middle of page: {{ linksDistributionMetric.valueNumeric2 + linksDistributionMetric.valueNumeric3 + linksDistributionMetric.valueNumeric4 }}<br />
+                    Links in bottom part of page: {{ linksDistributionMetric.valueNumeric5 }}
+                </p>
+            </div>
+            <div class="col-sm-5 col-sm-offset-1">
+                <h5>Why links distribution is important?</h5>
+                <p class="p-t-20">
+                    Lorem ipsum dolor sit amet enim. Etiam ullamcorper. Suspendisse a pellentesque dui, non felis.
+                    Maecenas malesuada elit lectus felis, malesuada ultricies. Curabitur et ligula. Ut molestie a,
+                    ultricies porta urna. Vestibulum commodo volutpat a, convallis ac, laoreet enim. Phasellus fermentum
+                    in, dolor.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>

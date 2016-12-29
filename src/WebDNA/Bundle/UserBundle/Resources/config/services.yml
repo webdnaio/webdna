@@ -1,0 +1,64 @@
+services:
+    # Doctrine repositories
+    #
+    user_repository:
+        class: Doctrine\Common\Persistence\ObjectRepository
+        factory_service: doctrine
+        factory_method: getRepository
+        arguments: [WebDNAUserBundle:User]
+        lazy: true
+
+    contact_data_repository:
+        class: Doctrine\Common\Persistence\ObjectRepository
+        factory_service: doctrine
+        factory_method: getRepository
+        arguments: [WebDNAUserBundle:ContactData]
+        lazy: true
+
+    # Entity services
+    #
+    users:
+        class:        "WebDNA\Bundle\UserBundle\Repository\Service\UserService"
+        arguments:    ["@user_repository", "@paginator"]
+        lazy: true
+
+    contact_datas:
+        class:        "WebDNA\Bundle\UserBundle\Repository\Service\ContactDataService"
+        arguments:    ["@contact_data_repository"]
+        lazy: true
+
+    webdna_user.registration.form.type:
+        class: WebDNA\Bundle\UserBundle\Form\Type\RegistrationFormType
+        tags:
+            - { name: form.type, alias: webdna_user_registration }
+        lazy: true
+
+    webdna_user.profile.form.type:
+        class: WebDNA\Bundle\UserBundle\Form\Type\ProfileFormType
+        tags:
+            - { name: form.type, alias: webdna_user_profile }
+        lazy: true
+
+    webdna_user.registration:
+          class: WebDNA\Bundle\UserBundle\EventListener\RegistrationEventListener
+          arguments: [@router, @service_container]
+          tags:
+              - { name: kernel.event_subscriber }
+          lazy: true
+
+    webdna_user.resetting:
+        class: WebDNA\Bundle\UserBundle\EventListener\ResettingEventListener
+        arguments: [@router, @service_container]
+        tags:
+            - { name: kernel.event_subscriber }
+        lazy: true
+
+    webdna_oauth_client:
+        class:        "WebDNA\Bundle\UserBundle\OAuthProvider\OAuthService"
+        arguments:    [@service_container, @request_stack]
+        lazy: true
+
+    webdna_recaptcha:
+        class: ReCaptcha\ReCaptcha
+        arguments:    [%recaptcha.secret%]
+        lazy: true

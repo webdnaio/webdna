@@ -1,0 +1,20 @@
+{% extends "WebDNAAppBundle:UserWorkbench:base.html.twig" %}
+
+{% block sidebar_content %}{% endblock %}
+
+{% block breadcrumbs %}
+    {{ breadcrumbs.crumb({ 'profile_edit': {'name': 'Notifications settings', 'active': '1'} }) }}
+{% endblock %}
+
+{% block page_header %}
+    <h1>Notifications settings</h1>
+{% endblock %}
+
+{% block main_content %}
+    {% if submitSuccess == true %}
+        <div class="alert alert-info">
+            Notification settings have been saved.
+        </div>
+    {% endif %}
+    {% include "WebDNAUserBundle:Profile:notification_content.html.twig" %}
+{% endblock main_content %}

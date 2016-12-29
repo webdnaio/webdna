@@ -1,0 +1,228 @@
+{% import "WebDNAAppBundle:UserWorkbench/Report/partials/table/macros:links.html.twig" as links %}
+{% import "WebDNAAppBundle:UserWorkbench/Report/partials/table/macros:process.html.twig" as process %}
+
+<div class="nav-tabs-custom">
+
+    <form id="criteriaForm" method="post"
+          action="{{ path('user_workbench_report_table', { website: website.id, analysisProcess: analysisProcess.id }) }}">
+
+        <input name="website" type="hidden" value="{{ website.id }}"/>
+        <input name="analysisProcess" type="hidden" value="{{ analysisProcess.id }}"/>
+        <input name="criteria[reset]" type="hidden" value="1" disabled/>
+        <input name="criteria[website]" type="hidden"
+               value="{% if groupedWebsite is not null %}{{ groupedWebsite.id }}{% endif %}"/>
+
+        {% include 'WebDNAAppBundle:UserWorkbench/Report/partials/filters:classes.html.twig' %}
+        {% include 'WebDNAAppBundle:UserWorkbench/Report/partials/filters:metricsExpert.html.twig' %}
+
+    </form>
+
+    <form id="report_table_form" method="post">
+        <div class="tab-content">
+            {% if pageItemAnalyzes.count > 0 %}
+                <table id="report_table" class="table table-bordered expert">
+                    <thead>
+                    <tr>
+                        <th class="text-center">
+                            <input type="checkbox"
+                                   onclick="reportApp.toggleSelectAllItems(analysisProcessId, this, true);"/>
+                        </th>
+                        <th>
+                            URL
+                            <a href="{{ path('user_workbench_report_table', { website: website.id, analysisProcess: analysisProcess.id }) }}?column=url&amp;order={% if sort != null and sort.column == 'url' and sort.order == 'desc' %}asc{% else %}desc{% endif %}">
+                                <i class="fa fa-sort{% if sort != null and sort.column == 'url' %}-{{ sort.order }}{% endif %} pull-right"></i>
+                            </a>
+                        </th>
+                        <th>
+
+                            Alert
+                            <a href="{{ path('user_workbench_report_table', { website: website.id, analysisProcess: analysisProcess.id }) }}?column=class&amp;order={% if sort != null and sort.column == 'class' and sort.order == 'desc' %}asc{% else %}desc{% endif %}">
+                                <i class="fa fa-sort{% if sort != null and sort.column == 'class' %}-{{ sort.order }}{% endif %} pull-right"></i>
+                            </a>
+                        </th>
+                        <th>
+                            Pointing links
+                            <a href="{{ path('user_workbench_report_table', { website: website.id, analysisProcess: analysisProcess.id }) }}?column=pointing_links&amp;order={% if sort != null and sort.column == 'pointing_links' and sort.order == 'desc' %}asc{% else %}desc{% endif %}">
+                                <i class="fa fa-sort{% if sort != null and sort.column == 'pointing_links' %}-{{ sort.order }}{% endif %} pull-right"></i>
+                            </a>
+                        </th>
+                        <th>
+                            Total links
+                            <a href="{{ path('user_workbench_report_table', { website: website.id, analysisProcess: analysisProcess.id }) }}?column=total_links&amp;order={% if sort != null and sort.column == 'total_links' and sort.order == 'desc' %}asc{% else %}desc{% endif %}">
+                                <i class="fa fa-sort{% if sort != null and sort.column == 'total_links' %}-{{ sort.order }}{% endif %} pull-right"></i>
+                            </a>
+                        </th>
+                        <th>
+                            Anchor
+                            <a href="{{ path('user_workbench_report_table', { website: website.id, analysisProcess: analysisProcess.id }) }}?column=anchor&amp;order={% if sort != null and sort.column == 'anchor' and sort.order == 'desc' %}asc{% else %}desc{% endif %}">
+                                <i class="fa fa-sort{% if sort != null and sort.column == 'anchor' %}-{{ sort.order }}{% endif %} pull-right"></i>
+                            </a>
+                        </th>
+                        <th>
+                            Domain authority
+                            <a href="{{ path('user_workbench_report_table', { website: website.id, analysisProcess: analysisProcess.id }) }}?column=domain_authority&amp;order={% if sort != null and sort.column == 'domain_authority' and sort.order == 'desc' %}asc{% else %}desc{% endif %}">
+                                <i class="fa fa-sort{% if sort != null and sort.column == 'domain_authority' %}-{{ sort.order }}{% endif %} pull-right"></i>
+                            </a>
+                        </th>
+                        <th>
+                            Domain age
+                            <a href="{{ path('user_workbench_report_table', { website: website.id, analysisProcess: analysisProcess.id }) }}?column=domain_age&amp;order={% if sort != null and sort.column == 'domain_age' and sort.order == 'desc' %}asc{% else %}desc{% endif %}">
+                                <i class="fa fa-sort{% if sort != null and sort.column == 'domain_age' %}-{{ sort.order }}{% endif %} pull-right"></i>
+                            </a>
+                        </th>
+                        {# <th class="hidden-sm hidden-xs">Link action</th> #}
+                        <th class="hidden-sm hidden-xs">Details</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    {% for page in pageItemAnalyzes %}
+
+                        {% set page_item_metrics = item_metrics_data(itemMetrics[page.itemAnalysisId]) %}
+
+                        <tr data-item-id="{{ page.itemAnalysisId }}" data-page-id="{{ page.pageId }}">
+                            <td><input {% if page.itemAnalysisId in idsSelected %}checked {% endif %}
+                                       class="page-item-input" name="item[]" type="checkbox"
+                                       value="{{ page.itemAnalysisId }}"/></td>
+                            <td class="url-col">
+
+                                <i class="review-mark{% if page.page_review_id is not null %} fa fa-eye{% endif %}"
+                                   title="mark as reviewed"></i>
+
+                                <a href="{{ page.url }}"
+                                   target="_blank">{{ page.url|replace({'http://': '', 'https://': ''}) }}</a>
+
+                                {% if page_item_metrics.urlSecurity == 'Yes' %}<span
+                                        class="label label-warning">malware</span>{% endif %}
+
+                                {% if page.httpCode == '404' %}<span
+                                        class="label label-warning">404</span>{% endif %}
+
+                                {% if page.url != page.effectiveUrl %}
+                                    <br/>
+                                    <small>
+                                        redirected to <a href="{{ page.effectiveUrl }}"
+                                                         target="_blank">{{ page.effectiveUrl|truncate(50)|replace({'http://': '', 'https://': ''}) }}</a>
+                                    </small>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <div class="btn-group h4 classify-menu">
+                                    <div id="pageAlert_{{ page.itemAnalysisId }}"
+                                         class="label label-{{ page.class|page_class_css_label }} dropdown-toggle"
+                                         data-toggle="dropdown" aria-expanded="false">
+                                        {% autoescape false %}
+                                        {% if page.classUser %}
+                                            <i class="{{ page.class|page_class_changed_css_icon }}"></i>
+                                        {% else %}
+                                            <i class=""></i>
+                                        {% endif %}
+                                        <span>{{ page.class|page_class_name|slice(0, 1)|capitalize }}</span>
+                                        {% endautoescape %}
+                                        <span class="caret"></span>
+                                    </div>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li>
+                                            <a tabindex="1" role="menuitem" href="#" class="classify"
+                                               data-rating="{{ class_positive }}"><i
+                                                        class="fa fa-circle-o text-green"></i>
+                                                Positive</a>
+                                        </li>
+                                        <li>
+                                            <a tabindex="2" role="menuitem" href="#" class="classify"
+                                               data-rating="{{ class_suspicious }}"><i
+                                                        class="fa fa-circle-o text-orange"></i>
+                                                Suspicious</a>
+                                        </li>
+                                        <li>
+                                            <a tabindex="3" role="menuitem" href="#" class="classify"
+                                               data-rating="{{ class_negative }}"><i
+                                                        class="fa fa-circle-o text-red"></i>
+                                                Negative</a>
+                                        </li>
+                                        <li>
+                                            <a tabindex="4" role="menuitem" class="classifyWebsiteMenuItem">
+                                                <input class="ion" type="checkbox" name="groupedWebsite"
+                                                       value="{{ page.websiteId }}"/> Mark whole domain
+                                            </a>
+                                        </li>
+                                        {% if page.classUser > 0 %}
+                                            <li class="divider"></li>
+                                            <li>
+                                                <a>
+                                                    <i class="fa fa-info-circle"></i>
+                                                    System class: {{ page.classSystem|page_class_name }}
+                                                </a>
+                                            </li>
+                                        {% endif %}
+                                        <li class="divider"></li>
+                                        <li>
+                                            <a href="{{ path('user_workbench_report_table', { website: website.id, analysisProcess: analysisProcess.id }) }}?criteria[website]={{ page.websiteId }}"><i
+                                                        class="fa fa-rocket"></i> show domain details</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </td>
+                            <td>
+                                {{ page.pointingLinksCount }}
+                            </td>
+                            <td>
+                                {{ page.totalLinksOnSiteCount }}
+                            </td>
+                            <td>
+                                {% if page.anchor == '' %}
+                                    (not found)
+                                {% else %}
+                                    {{ page.anchor }}
+                                {% endif %}
+                            </td>
+                            <td>
+                                {{ page.domainAuthority }}
+                            </td>
+                            <td>
+                                {% if page.domainAge %}
+                                    {{ page.domainAge|date("Y-m-d") }}
+                                {% endif %}
+                            </td>
+                            <td class="hidden-sm hidden-xs">
+                                <a href="#" class="details">
+                                    <i class="glyphicon glyphicon-zoom-in"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                {% if allPagesReviewed == true %}
+                    <div class="alert alert-info" style="margin-top: -8px;">
+                        <h3>All pages are reviewed</h3>
+                        <h5>Use filters above to show reviewed pages</h5>
+                    </div>
+                {% else %}
+                    {% set unreviewedCount = totalCount-reviewedCount %}
+                    <div class="alert alert-warning" style="margin-top: -8px;">
+                        <h3>There are no urls for your search criteria</h3>
+                        {% if totalCount > 0 %}
+                            <h5>Use filters above to show more entries. There
+                                {% if unreviewedCount == 1 %}is one{% else %}are {{ unreviewedCount }}{% endif %}
+                                unreviewed
+                                of {{ totalCount }} pages in this analysis.</h5>
+                        {% endif %}
+                    </div>
+                {% endif %}
+            {% endif %}
+        </div>
+    </form>
+
+    <div class="box-footer clearfix">
+        <div class="pull-left">
+            {{ knp_pagination_render(pageItemAnalyzes) }}
+        </div>
+        {% if pageItemAnalyzes.count > 0 and allPagesReviewed == false %}
+            <button onclick="reportApp.markAsReviewed(this, '{{ website.id }}', '{{ analysisProcess.id }}', reportApp.getPagesIdsFromView(), 1);"
+                    class="btn btn-primary pull-right"><i class=""></i> Mark as reviewed
+            </button>
+        {% endif %}
+    </div>
+</div>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<head>
+    <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+    <meta charset="utf-8" />
+    <title>Web DNA app for SEO | Control Your Digital Footprint</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="description" content="Audit your SEO performance. Disavow toxic links. Web DNA is a big data app, that helps website owners, and webmasters in their everyday work. It allows you to verify the work of your SEO specialist or agency">
+
+    {% block stylesheets %}
+        {% stylesheets filter='cssrewrite'
+            '@WebDNAAppBundle/Resources/public/shared/plugins/pace/themes/white/pace-theme-flash.css'
+            '@WebDNAAppBundle/Resources/public/shared/plugins/bootstrap/dist/css/bootstrap.min.css'
+            '@WebDNAAppBundle/Resources/public/shared/plugins/bootstrap/dist/css/bootstrap-theme.min.css'
+            '@WebDNAAppBundle/Resources/public/frontend/css/404/animate.min.css'
+            '@WebDNAAppBundle/Resources/public/frontend/css/404/style.css'
+            '@WebDNAAppBundle/Resources/public/shared/plugins/font-awesome/css/font-awesome.min.css'
+        %}
+            <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+        {% endstylesheets %}
+    {% endblock %}
+
+    {% block header_scripts %}{% endblock %}
+</head>
+<!-- END HEAD -->
+<body class="error-body no-top">
+    <div class="error-wrapper container">
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-xs-offset-1 col-xs-10">
+                <div class="error-container" >
+                    <div class="error-main">
+                        <div class="error-number">404</div>
+                        <div class="error-description"> We seem to have lost you in the clouds.</div>
+                        <div class="error-description-mini">The page your looking for is not here</div>
+
+                        <a href="{{ path('homepage') }}" class="btn btn-primary btn-cons m-t-30" type="button">Return to homepage</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% block footer_scripts %}
+        {% javascripts
+            '@WebDNAAppBundle/Resources/public/shared/plugins/jquery/dist/jquery.min.js'
+            '@WebDNAAppBundle/Resources/public/shared/plugins/bootstrap/dist/js/bootstrap.min.js'
+            '@WebDNAAppBundle/Resources/public/shared/plugins/pace/pace.min.js'
+        %}
+        <script src="{{ asset_url }}" type="text/javascript"></script>
+        {% endjavascripts %}
+    {% endblock %}
+
+</body>

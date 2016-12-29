@@ -1,0 +1,40 @@
+{% extends '::base.html.twig' %}
+
+{% block meta_title %}Discover your website - Choose domain to analyze{% endblock %}
+
+{% block content %}
+    <div class="section first ha-waypoint"  data-animate-down="ha-header-color" data-animate-up="ha-header-hide" >
+        <div class="container p-t-30">
+            <div class="p-b-60">
+                <div class="row">
+                    <div class="col-md-6 col-sm-6">
+                        <h1>Analyze backlinks to your website</h1>
+                        <p>Start using WebDNA.io now, and see what it can do for you and your business.</p>
+                    </div>
+                </div>
+
+                <div class="row p-t-30">
+                    <div class="col-md-6 col-sm-6">
+                        <form action="" method="post">
+                            <div class="row form-row">
+                                <div class="col-md-10">
+                                    {{ form_widget(form.name) }}
+                                    {{ form_errors(form.name) }}
+                                </div>
+                            </div>
+                            <div class="row form-row">
+                                <div class="col-md-10">
+                                    <input type="submit" class="btn btn-primary btn-cons" value="Analyze" />
+                                </div>
+                            </div>
+                            {{ form_rest(form) }}
+                        </form>
+                    </div>
+                    <div class="col-md-6 feature-list">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,31 @@
+<section class="content-8">
+    <div class="container">
+        <div class="imgs">
+            <img src="{{ asset('bundles/webdnaapp/frontend/startup/flat-ui/images/icons/png/Clipboard.png') }}" alt="" />
+        </div>
+        <h2>Your website META statistics</h2>
+        <p>
+            Title length: <strong>{{ metaMetric.valueNumeric1 }}</strong><br />
+            Description length: <strong>{{ metaMetric.valueNumeric2 }}</strong><br />
+            Keywords length: <strong>{{ metaMetric.valueNumeric3 }}</strong>
+        </p>
+        <div class="row text-left p-t-30">
+            <div class="col-sm-5 col-sm-offset-1">
+                <h5>Social media integration</h5>
+                <p class="p-t-20">
+                    Facebook Open Graph tags: {{ meteaSocialMetric.valueNumeric1 }}<br />
+                    Twitter cards tags: {{ meteaSocialMetric.valueNumeric2 }}
+                </p>
+            </div>
+            <div class="col-sm-5 col-sm-offset-1">
+                <h5>Why META tags are important?</h5>
+                <p class="p-t-20">
+                    Lorem ipsum dolor sit amet enim. Etiam ullamcorper. Suspendisse a pellentesque dui, non felis.
+                    Maecenas malesuada elit lectus felis, malesuada ultricies. Curabitur et ligula. Ut molestie a,
+                    ultricies porta urna. Vestibulum commodo volutpat a, convallis ac, laoreet enim. Phasellus fermentum
+                    in, dolor.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>

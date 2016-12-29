@@ -1,0 +1,11 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block subject %}WebDNA.io password recovery{% endblock %}
+
+{% block body_text %}
+    {% include 'WebDNAUserBundle:Resetting:email.body.txt.twig' %}
+{% endblock %}
+
+{% block body_html %}
+    {% include 'WebDNAUserBundle:Resetting:email.body.html.twig' %}
+{% endblock %}

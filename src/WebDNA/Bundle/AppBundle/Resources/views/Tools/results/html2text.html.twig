@@ -1,0 +1,32 @@
+<section class="content-8">
+    <div class="container">
+        <div class="imgs">
+            <img src="{{ asset('bundles/webdnaapp/frontend/startup/flat-ui/images/icons/png/Clipboard.png') }}" alt="" />
+        </div>
+        <h3>Your score: {{ metric.valueNumeric3|number_format(2, '.') }} %</h3>
+        <p>
+            Document length: <strong>{{ metric.valueNumeric1|number_format(0, '.', ' ') }}</strong> /
+            Text length: <strong>{{ metric.valueNumeric2|number_format(0, '.', ' ') }}</strong>
+        </p>
+        <div class="row text-left p-t-30">
+            <div class="col-sm-5 col-sm-offset-1">
+                <h5>What is Text to HTML ratio?</h5>
+                <p class="p-t-20">
+                    Every website is written in HTML code and the content displayed as text. The text/HTML ratio is the
+                    percentage of actual text content found in a web page. Text – HTML ratio of a web page should be
+                    balanced. Website with very low text - html ratio is most likely to appear invisible in the search
+                    engines (Google, Yahoo and Bing).
+                </p>
+            </div>
+            <div class="col-sm-5 col-sm-offset-1">
+                <h5>What Is the Best Text/HTML Ratio?</h5>
+                <p class="p-t-20">
+                    The aspect ratio should be at least 10% for text and 90% or less for HTML. The more text you have,
+                    your webpage will have better performance on search engines. Since newest upgrades of Google and
+                    other search engines focus more on content, so the text ratio could be more important to get rank
+                    higher in the SERPs.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>

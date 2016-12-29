@@ -1,0 +1,24 @@
+web_dna_app:
+    resource: "@WebDNAAppBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+web_dna_user:
+    resource: "@WebDNAUserBundle/Controller/"
+    type:     annotation
+    prefix:   /user
+
+web_dna_verifier:
+    resource: "@WebDNAVerifierBundle/Controller/"
+    type:     annotation
+    prefix:   /verifier
+
+fos_user:
+    resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+
+oneup_uploader:
+    resource: .
+    type: uploader
+
+fos_js_routing:
+    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"

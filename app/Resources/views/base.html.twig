@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>{% block meta_title %}Web DNA app for SEO | Control Your Digital Footprint{% endblock %}</title>
+    <meta name="robots" content="index,follow" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <link rel="shortcut icon" href="{{ asset('bundles/webdnaapp/shared/img/favicon.png') }}">
+    <meta name="description" content="Audit your SEO performance. Disavow toxic links. Web DNA is a big data app, that helps website owners, and webmasters in their everyday work. It allows you to verify the work of your SEO specialist or agency"/>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+
+    <meta name="keywords" content="text to code ratio, text to html ratio, tools, seo tools">
+    <meta property="og:title" content="Web DNA app for SEO | Control Your Digital Footprint">
+    <meta property="og:description" content="Audit your SEO performance. Disavow toxic links. Web DNA is a big data app, that helps website owners, and webmasters in their everyday work. It allows you to verify the work of your SEO specialist or agency">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="http://webdna.io/">
+    <meta property="og:image" content="http://webdna.io/bundles/webdnaapp/frontend/img/laptop.png">
+    <meta property="og:site_name" content="WebDNA.io - Seo controling software">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@WebDNAio">
+    <meta name="twitter:title" content="Web DNA app for SEO | Control Your Digital Footprint">
+    <meta name="twitter:description" content="Audit your SEO performance. Disavow toxic links. Web DNA is a big data app, that helps website owners, and webmasters in their everyday work. It allows you to verify the work of your SEO specialist or agency">
+    <meta name="twitter:creator" content="WebDNA.io">
+    <meta name="twitter:image" content="http://webdna.io{{ asset('/bundles/webdnaapp/frontend/img/logo_twitter.png') }}">
+
+    {% block stylesheets %}
+        {% stylesheets filter='cssrewrite'
+            'bundles/webdnaapp/frontend/startup/flat-ui/bootstrap/css/bootstrap.css'
+            'bundles/webdnaapp/frontend/startup/flat-ui/css/flat-ui.css'
+            'bundles/webdnaapp/frontend/startup/common-files/css/icon-font.css'
+            'bundles/webdnaapp/frontend/startup/common-files/css/animations.css'
+            'bundles/webdnaapp/frontend/startup/ui-kit/ui-kit-blog/css/style.css'
+            'bundles/webdnaapp/frontend/startup/ui-kit/ui-kit-contacts/css/style.css'
+            'bundles/webdnaapp/frontend/startup/ui-kit/ui-kit-content/css/style.css'
+            'bundles/webdnaapp/frontend/startup/ui-kit/ui-kit-crew/css/style.css'
+            'bundles/webdnaapp/frontend/startup/ui-kit/ui-kit-footer/css/style.css'
+            'bundles/webdnaapp/frontend/startup/ui-kit/ui-kit-header/css/style.css'
+            'bundles/webdnaapp/frontend/startup/ui-kit/ui-kit-price/css/style.css'
+            'bundles/webdnaapp/frontend/startup/ui-kit/ui-kit-projects/css/style.css'
+            'bundles/webdnaapp/frontend/css/style.css'
+            'bundles/webdnaapp/frontend/css/core.css'
+        %}
+            <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+        {% endstylesheets %}
+    {% endblock %}
+
+    {% block header_scripts %}
+        {% javascripts
+        'bundles/webdnaapp/frontend/startup/common-files/js/jquery-1.10.2.min.js'
+        'bundles/webdnaapp/frontend/startup/flat-ui/js/bootstrap.min.js'
+        '@WebDNAAppBundle/Resources/public/frontend/js/headerCookie.js' %}
+        <script src="{{ asset_url }}" type="text/javascript"></script>
+        {% endjavascripts %}
+    {% endblock %}
+
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
+</head>
+
+<body>
+    {% if app.environment != 'dev' %}
+        {% include 'WebDNAAppBundle:Common:trackers.html.twig' %}
+    {% endif %}
+
+    <div class="page-wrapper" {% if app.request.get('_route') != 'homepage' %}style="padding-top: 60px;"{% endif %}>
+
+        {% block header %}
+            {% include 'WebDNAAppBundle:Common:navbar.html.twig' %}
+        {% endblock %}
+
+        {% block content %}{% endblock %}
+
+        {% block footer %}
+            {% include 'WebDNAAppBundle:Common:footer.html.twig' %}
+        {% endblock %}
+    </div>
+
+    {% block footer_scripts %}
+        {% javascripts
+        'bundles/webdnaapp/frontend/startup/common-files/js/modernizr.custom.js'
+        'bundles/webdnaapp/frontend/startup/common-files/js/page-transitions.js'
+        'bundles/webdnaapp/frontend/startup/common-files/js/startup-kit.js'
+        %}
+            <script src="{{ asset_url }}" type="text/javascript"></script>
+        {% endjavascripts %}
+    {% endblock %}
+
+    {% spaceless %}
+        {% block header_cookie %}
+            {% if app.request.cookies.has('cookie_approval') == 0 %}
+                <div id="header_cookies">
+                    <div class="pull-right"><a class="fui-cross" onclick="headerCookie.set();"></a></div>
+                    <div class="row text-center">
+                        <a href="{{ path('page_disclaimer') }}" onclick="headerCookie.set();">
+                            We use cookies to gather information and details about your visit. We do this to find out things
+                            such as the most popular areas of the website.
+                        </a>
+                    </div>
+                </div>
+            {% endif %}
+        {% endblock %}
+    {% endspaceless %}
+
+</body>
+</html>

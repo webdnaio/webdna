@@ -1,0 +1,68 @@
+{% extends '::dashboard_base.html.twig' %}
+
+{% set class_positive = constant('WebDNA\\Bundle\\AppBundle\\Entity\\ItemAnalysis::CLASS_POSITIVE') %}
+{% set class_suspicious = constant('WebDNA\\Bundle\\AppBundle\\Entity\\ItemAnalysis::CLASS_SUSPICIOUS') %}
+{% set class_negative = constant('WebDNA\\Bundle\\AppBundle\\Entity\\ItemAnalysis::CLASS_NEGATIVE') %}
+{% set class_unknown  = constant('WebDNA\\Bundle\\AppBundle\\Entity\\ItemAnalysis::CLASS_UNKNOWN') %}
+
+{% import "::breadcrumbs.html.twig" as breadcrumbs %}
+
+{% block flash_messages %}
+    {% if app.session.flashbag.has('notice') %}
+        <div class="row">
+            <div class="col-md-12">
+                {% for flashMessage in app.session.flashbag.get('notice') %}
+                    <div class="alert alert-info alert-dismissable">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                        {{ flashMessage }}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block dashboard_submenu %}
+    {% if analysisProcess is defined %}
+    <ul class="treeview-menu menu-open" style="display: block; background-color: rgb(81, 79, 78); padding-bottom: 5px;">
+        <li class="active" style="background-color: brown;">
+            <a href="{{ path('user_workbench_report_table', { analysisProcess: analysisProcess.id, website: website.id }) }}">
+                <i class="fa fa-{% if website is defined and website.id == website.id %}dot-circle-o{% else %}circle-o{% endif %}"></i>
+                {{ website.name }}
+            </a>
+        </li>
+        {% block action_menu %}{% endblock %}
+    </ul>
+    {% endif %}
+{% endblock %}
+
+{% block dashboard_report_menu %}
+    {% if reportType is defined %}
+    <ul class="sidebar-menu strong">
+        <li{% if reportType == 'url' %} class="active"{% endif %}>
+            <a href="{{ path('user_workbench_report_table', {reportType: 'url', analysisProcess: analysisProcess.id, website: website.id}) }}">
+                URL report
+            </a>
+        </li>
+        {% if is_granted('ROLE_PREMIUM') %}
+        <li{% if reportType == 'expert' %} class="active"{% endif %}>
+            <a href="{{ path('user_workbench_report_table', {reportType: 'expert', analysisProcess: analysisProcess.id, website: website.id}) }}">
+                Extended URL report
+            </a>
+        </li>
+        {% endif %}
+        <li{% if reportType == 'domain' %} class="active"{% endif %}>
+            <a href="{{ path('user_workbench_website_groups', {reportType: 'domain', analysisProcess: analysisProcess.id, website: website.id}) }}">
+                Domain report
+            </a>
+        </li>
+        {% block analyzes_menu %}{% endblock %}
+    </ul>
+    {% endif %}
+{% endblock %}
+
+{% block breadcrumbs %}{{ breadcrumbs.crumb() }}{% endblock %}
+
+{% block footer_scripts %}
+    {{ parent() }}
+{% endblock %}

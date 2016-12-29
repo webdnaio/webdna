@@ -1,0 +1,58 @@
+{% extends '::base.html.twig' %}
+
+{% block meta_title %}Disclaimer{% endblock %}
+
+{% block content %}
+    <section class="blog-1">
+        <div class="title">
+            <div class="container">
+                <h3>Disclaimer</h3>
+
+                <div class="submitted">and cookies policy</div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-3 links">
+                    <div class="tags">
+                        <h6>TOPICS</h6>
+                        <ul>
+                            <li><a href="#section-beta-version">Beta version</a>
+                            </li>
+                            <li><a href="#section-cookies-policy">Cookies policy</a>
+                            </li>
+                            <li><a href="#section-contact">Contact</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-sm-9">
+                    <h4 id="section-beta-version">Beta version</h4>
+                    <p>
+                        WebDNA.io beta version is open for users for free. The data shared with WebDNA.io app is not
+                        used for commercial purposes. Customers own their data and WebDNA.io will not share them with
+                        any third party.
+                    </p>
+
+                    <h4 id="section-cookies-policy" class="p-t-60">Cookies policy</h4>
+                    <p>We use cookies to gather information about your visit. We do this to improve the functionality of our website.</p>
+
+                    <h4 id="section-contact" class="p-t-60">Contact</h4>
+                    <p>To contact us please write at <a href="mailto:hello@webdna.io">hello@webdna.io</a>.</p>
+                    <p>
+                        W33 Inc.<br />
+                        ul. Ścinawska 14/15<br />
+                        53-642 Wroclaw, Poland
+                    </p>
+                    <p>
+                        VAT number PL6762460602<br />
+                        KRS (Inc ID) 0000443203
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {% include 'WebDNAAppBundle:Common:betaInvitation.html.twig' %}
+{% endblock %}

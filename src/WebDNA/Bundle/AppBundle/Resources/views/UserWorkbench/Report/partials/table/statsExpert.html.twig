@@ -1,0 +1,125 @@
+{% set sum_of_urls = analysisProcessSummary.positive + analysisProcessSummary.negative + analysisProcessSummary.suspicious %}
+
+{% if sum_of_urls == 0 %}
+    {% set sum_of_urls = 1 %}
+{% endif %}
+
+<script>
+var statsExpertInterval = setInterval(function () {
+    if($('#summary-box').is(':visible')) {
+        clearInterval(statsExpertInterval);
+        showMorisChart();
+    }
+}, 200);
+</script>
+<div class="box box-default{% if hideSummary is defined and hideSummary == 'true' %} collapsed-box{% endif %}">
+    <div class="box-header with-border">
+        <h3 class="box-title">Summary</h3>
+
+        <div class="box-tools pull-right">
+            <button onclick="
+            var $summaryBox = $('#summary-box');
+            Cookies('hide_summary_' + analysisProcessId, '{{ hideSummary }}'=='true'?'false':'true', { path: '/' });
+            " class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
+                <i class="fa fa-{% if hideSummary is defined and hideSummary == 'true' %}plus{% else %}minus{% endif %}"></i>
+            </button>
+        </div>
+        <!-- /.box-tools -->
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body"{% if hideSummary is defined and hideSummary == 'true' %} style="display: none;"{% endif %} id="summary-box">
+
+        <div class="row">
+            <div class="col-md-3 text-center">
+                <b>Positive to negative</b>
+
+                <div id="classification-donut" style="height: 180px;"></div>
+            </div>
+
+            <div class="col-md-3">
+                <table class="table table-condensed">
+                    <thead>
+                    <tr>
+                        <th colspan="2">
+                            Analysis in numbers
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>Analysed pages</td>
+                        <td>{{ analysisProcessSummary.totalPagesAnalyzed }}</td>
+                    </tr>
+                    <tr>
+                        <td>Analysed domains</td>
+                        <td>{{ analysisProcessSummary.analyzedDomains }}</td>
+                    </tr>
+                    <tr>
+                        <td>Found links</td>
+                        <td>{{ analysisProcessSummary.linksFound }}</td>
+                    </tr>
+                    <tr>
+                        <td>Links follow</td>
+                        <td>{{ analysisProcessSummary.linksFollow }}</td>
+                    </tr>
+                    <tr>
+                        <td>Links nofollow</td>
+                        <td>{{ analysisProcessSummary.linksNofollow }}</td>
+                    </tr>
+                    <tr>
+                        <td>Negative links</td>
+                        <td>{{ analysisProcessSummary.negative }}</td>
+                    </tr>
+                    <tr>
+                        <td>Positive links</td>
+                        <td>{{ analysisProcessSummary.positive }}</td>
+                    </tr>
+                    <tr>
+                        <td>Suspicious links</td>
+                        <td>{{ analysisProcessSummary.suspicious }}</td>
+                    </tr>
+                    <tr>
+                        <td>Malware</td>
+                        <td>{{ analysisProcessSummary.malware }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="col-md-3">
+                <table class="table table-condensed">
+                    <thead>
+                    <tr>
+                        <th colspan="2">
+                            <i class="fa fa-sort-amount-desc"></i> <strong style="padding-left: 8px;">
+                                Top 10 domains</strong> <i class="spinner"></i>
+                        </th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    {% for websiteGroup in websiteGroups.getItems() %}
+                        <tr>
+                            <td>
+                                {{ websiteGroup.name }}
+                            </td>
+                            <td>
+                                <b>{{ websiteGroup.itemCount }}</b>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    <tr>
+                        <td colspan="2">
+                            <a class="pull-right" href="{{ path('user_workbench_website_groups', {analysisProcess: analysisProcess.id, website: website.id}) }}"><i
+                                        class="fa fa-th-list"></i> Show all <span class="top-websites-count">({{ websiteGroups.getTotalItemCount() }})</span></a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+    </div>
+    <!-- /.box-body -->
+</div><!-- /.box -->

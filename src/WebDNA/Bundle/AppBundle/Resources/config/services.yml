@@ -1,0 +1,476 @@
+imports:
+    - { resource: ../../../../../../app/config/parameters.yml }
+
+services:
+    zendesk:
+        class: Zendesk\API\Client
+        arguments: ['webdna', 'zendesk@webdna.io']
+        calls:
+            - [setAuth, ['token', 'tqIVPxm1r6t6Rq51gU2iCESVQvFsHwclc7XBEVqS']]
+
+    # Doctrine repositories
+    #
+    analysis_process_input_repository:
+        class: Doctrine\Common\Persistence\ObjectRepository
+        factory_service: doctrine
+        factory_method: getRepository
+        arguments: [WebDNAAppBundle:AnalysisProcessInput]
+        lazy: true
+
+    analysis_process_output_repository:
+        class: Doctrine\Common\Persistence\ObjectRepository
+        factory_service: doctrine
+        factory_method: getRepository
+        arguments: [WebDNAAppBundle:AnalysisProcessOutput]
+        lazy: true
+
+    analysis_process_repository:
+        class: Doctrine\Common\Persistence\ObjectRepository
+        factory_service: doctrine
+        factory_method: getRepository
+        arguments: [WebDNAAppBundle:AnalysisProcess]
+        lazy: true
+
+    analysis_process_stats_repository:
+        class: Doctrine\Common\Persistence\ObjectRepository
+        factory_service: doctrine
+        factory_method: getRepository
+        arguments: [WebDNAAppBundle:AnalysisProcessStats]
+        lazy: true
+
+    item_analysis_repository:
+        class: Doctrine\Common\Persistence\ObjectRepository
+        factory_service: doctrine
+        factory_method: getRepository
+        arguments: [WebDNAAppBundle:ItemAnalysis]
+        lazy: true
+
+    item_metric_repository:
+        class: Doctrine\Common\Persistence\ObjectRepository
+        factory_service: doctrine
+        factory_method: getRepository
+        arguments: [WebDNAAppBundle:ItemMetric]
+        lazy: true
+
+    link_repository:
+        class: Doctrine\Common\Persistence\ObjectRepository
+        factory_service: doctrine
+        factory_method: getRepository
+        arguments: [WebDNAAppBundle:Link]
+        lazy: true
+
+    page_repository:
+        class: Doctrine\Common\Persistence\ObjectRepository
+        factory_service: doctrine
+        factory_method: getRepository
+        arguments: [WebDNAAppBundle:Page]
+        lazy: true
+
+    event_repository:
+        class: Doctrine\Common\Persistence\ObjectRepository
+        factory_service: doctrine
+        factory_method: getRepository
+        arguments: [WebDNAAppBundle:Event]
+        lazy: true
+
+    website_ownership_confirmation_repository:
+        class: Doctrine\Common\Persistence\ObjectRepository
+        factory_service: doctrine
+        factory_method: getRepository
+        arguments: [WebDNAAppBundle:WebsiteOwnershipConfirmation]
+        lazy: true
+
+    website_repository:
+        class: Doctrine\Common\Persistence\ObjectRepository
+        factory_service: doctrine
+        factory_method: getRepository
+        arguments: [WebDNAAppBundle:Website]
+        lazy: true
+
+    website_stats_repository:
+        class: Doctrine\Common\Persistence\ObjectRepository
+        factory_service: doctrine
+        factory_method: getRepository
+        arguments: [WebDNAAppBundle:WebsiteStats]
+        lazy: true
+
+    website_user_classification_repository:
+        class: Doctrine\Common\Persistence\ObjectRepository
+        factory_service: doctrine
+        factory_method: getRepository
+        arguments: [WebDNAAppBundle:WebsiteUserClassification]
+        lazy: true
+
+    disavow_repository:
+        class: Doctrine\Common\Persistence\ObjectRepository
+        factory_service: doctrine
+        factory_method: getRepository
+        arguments: [WebDNAAppBundle:Disavow]
+        lazy: true
+
+    proxy_repository:
+        class: Doctrine\Common\Persistence\ObjectRepository
+        factory_service: doctrine
+        factory_method: getRepository
+        arguments: [WebDNAAppBundle:Proxy]
+        lazy: true
+
+    notification_repository:
+        class: Doctrine\Common\Persistence\ObjectRepository
+        factory_service: doctrine
+        factory_method: getRepository
+        arguments: [WebDNAAppBundle:Notification]
+        lazy: true
+
+    page_review_repository:
+        class: Doctrine\Common\Persistence\ObjectRepository
+        factory_service: doctrine
+        factory_method: getRepository
+        arguments: [WebDNAAppBundle:PageReview]
+        lazy: true
+
+    page_metrics_repository:
+        class: Doctrine\Common\Persistence\ObjectRepository
+        factory_service: doctrine
+        factory_method: getRepository
+        arguments: [WebDNAAppBundle:PageMetric]
+        lazy: true
+
+    # Entity services
+    #
+    analysis_process_inputs:
+        class:        "WebDNA\Bundle\AppBundle\Repository\Service\AnalysisProcessInputService"
+        arguments:    ["@analysis_process_input_repository", "@filesystem_analysis_process_inputs"]
+        lazy: true
+
+    analysis_process_outputs:
+        class:        "WebDNA\Bundle\AppBundle\Repository\Service\AnalysisProcessOutputService"
+        arguments:    ["@analysis_process_output_repository"]
+        lazy: true
+
+    analysis_process_urls:
+        class:        "WebDNA\Bundle\AppBundle\Repository\Service\AnalysisProcessUrlsService"
+        arguments:    ["@analysis_processes", "@analysis_process_inputs", "@validator", "@uploader.namer.analysis_input_uniqid_namer"]
+        lazy: true
+
+    analysis_processes:
+        class:        "WebDNA\Bundle\AppBundle\Repository\Service\AnalysisProcessService"
+        arguments:    ["@analysis_process_repository", "@paginator"]
+        lazy: true
+
+    analysis_processes_stats:
+        class:        "WebDNA\Bundle\AppBundle\Repository\Service\AnalysisProcessStatsService"
+        arguments:    ["@service_container", "@analysis_process_stats_repository"]
+        lazy: true
+
+    item_analyzes:
+        class:        "WebDNA\Bundle\AppBundle\Repository\Service\ItemAnalysisService"
+        arguments:    ["@item_analysis_repository", "@pages", "@paginator"]
+        lazy: true
+
+    item_metrics:
+        class:        "WebDNA\Bundle\AppBundle\Repository\Service\ItemMetricService"
+        arguments:    ["@item_metric_repository"]
+        lazy: true
+
+    links:
+        class:        "WebDNA\Bundle\AppBundle\Repository\Service\\LinkService"
+        arguments:    ["@link_repository"]
+        lazy: true
+
+    pages:
+        class:        'WebDNA\Bundle\AppBundle\Repository\Service\PageService'
+        arguments:    ["@page_repository"]
+        lazy: true
+
+    page_reviews:
+        class:        "WebDNA\Bundle\AppBundle\Repository\Service\\PageReviewService"
+        arguments:    ["@page_review_repository"]
+        lazy: true
+
+    page_metrics:
+        class:        WebDNA\Bundle\AppBundle\Repository\Service\PageMetricService
+        arguments:    ["@page_metrics_repository", "@item_metrics", "@pages"]
+        lazy: true
+
+    events:
+        class:        "WebDNA\Bundle\AppBundle\Repository\Service\\EventService"
+        arguments:    ["@event_repository"]
+        lazy: true
+
+    website_ownership_confirmations:
+        class:        "WebDNA\Bundle\AppBundle\Repository\Service\WebsiteOwnershipConfirmationService"
+        arguments:    ["@website_ownership_confirmation_repository"]
+        lazy: true
+
+    websites:
+        class:        "WebDNA\Bundle\AppBundle\Repository\Service\WebsiteService"
+        arguments:    ["@website_repository", "@paginator"]
+        lazy: true
+
+    website_stats:
+        class:        WebDNA\Bundle\AppBundle\Repository\Service\WebsiteStatsService
+        arguments:    ["@website_repository", "@paginator"]
+        lazy: true
+
+    website_user_classifications:
+        class:        WebDNA\Bundle\AppBundle\Repository\Service\WebsiteUserClassificationService
+        arguments:    ["@website_user_classification_repository"]
+        lazy: true
+
+    disavow:
+        class:        "WebDNA\Bundle\AppBundle\Repository\Service\DisavowService"
+        arguments:    ["@disavow_repository"]
+        lazy: true
+
+    proxies:
+        class:        "WebDNA\Bundle\AppBundle\Repository\Service\\ProxyService"
+        arguments:    ["@proxy_repository"]
+        lazy: true
+
+    notifications:
+        class:        'WebDNA\Bundle\AppBundle\Repository\Service\NotificationService'
+        arguments:    ["@notification_repository"]
+        lazy: true
+
+    notification_emails:
+        class:        'WebDNA\Bundle\AppBundle\Repository\Service\NotificationEmailService'
+        arguments:    ["@notifications", "@analysis_processes", "@analysis_processes_stats", "@mailer", "@logger", "@twig", %sender_email_address%, %sender_name%]
+        lazy: true
+
+    paginator:
+        class:        WebDNA\Bundle\AppBundle\Repository\Service\PaginatorService
+        arguments:    ["@knp_paginator"]
+        lazy: true
+
+    # Queues
+    #
+    processing_lock_factory:
+        class:        'WebDNA\Bundle\AppBundle\Model\ProcessingLockFactory'
+        arguments:    ["@snc_redis.default"]
+        lazy: true
+
+    analysis_process_counters_factory:
+        class:        "WebDNA\Bundle\AppBundle\Model\AnalysisProcessCountersFactory"
+        arguments:    ["@snc_redis.default"]
+        lazy: true
+
+    link_analysis_queue_provider:
+        class:        "WebDNA\Bundle\AppBundle\\Provider\\LinkAnalysisQueueProvider"
+        arguments:    ['@link_analysis_consumer', %queue_link_analysis_parallelism%]
+        lazy: true
+
+    demo_link_analysis_queue_provider:
+        class:        "WebDNA\Bundle\AppBundle\\Provider\\DemoLinkAnalysisQueueProvider"
+        arguments:    ['@link_analysis_consumer', %queue_demo_link_analysis_parallelism%]
+        lazy: true
+
+    internal_link_analysis_queue_provider:
+        class:        "WebDNA\Bundle\AppBundle\\Provider\\InternalLinkAnalysisQueueProvider"
+        arguments:    ['@link_analysis_consumer', %queue_internal_link_analysis_parallelism%]
+        lazy: true
+
+    backlinks_queue_provider:
+        class:        "WebDNA\Bundle\AppBundle\\Provider\\BacklinksQueueProvider"
+        arguments:    ['@backlinks_consumer', %queue_link_analysis_parallelism%]
+        lazy: true
+
+    link_analysis_consumer:
+        class:        "WebDNA\Bundle\AppBundle\Consumer\\LinkAnalysisConsumer"
+        arguments:    ["@service_container"]
+        lazy: true
+
+    demo_link_analysis_consumer:
+        class:        "WebDNA\Bundle\AppBundle\Consumer\\LinkAnalysisConsumer"
+        arguments:    ["@service_container"]
+        lazy: true
+
+    internal_link_analysis_consumer:
+        class:        "WebDNA\Bundle\AppBundle\Consumer\\LinkAnalysisConsumer"
+        arguments:    ["@service_container"]
+        lazy: true
+
+    domain_analysis_consumer:
+        class:        "WebDNA\Bundle\AppBundle\Consumer\\DomainAnalysisConsumer"
+        arguments:    ["@service_container"]
+        lazy: true
+
+    backlinks_consumer:
+        class:        "WebDNA\Bundle\AppBundle\Consumer\BacklinksConsumer"
+        arguments:    ["@analysis_processes", "@analysis_process_urls", "@analysis_process_inputs", "@backlinks_chain", "@logger"]
+        lazy: true
+
+    # Screenshot services
+    browshot:
+        class:        "Browshot"
+        arguments:    ["6MuHy7QZhUjo6mdmDmuwpIusnEJEeH"]
+        lazy: true
+
+    screenshooter:
+        class:        "WebDNA\Bundle\AppBundle\Model\Screenshooter"
+        arguments:    ["@browshot", "@filesystem_main"]
+        lazy: true
+
+    # ApiClients services
+    api_client_http_client:
+        class:        "Buzz\Client\Curl"
+        lazy: true
+        calls:
+            - [setTimeout, [30]]
+
+    api_client_webarchive:
+        class:        "WebDNA\Bundle\AppBundle\ApiClient\WebArchive\WebArchive"
+        arguments:    ["@api_client_http_client"]
+        lazy: true
+
+    backlinks_moz:
+        class:        "WebDNA\Bundle\AppBundle\ApiClient\Backlinks\MOZ"
+        arguments:    [%moz_access_keys%, %moz_backlinks_fetch_limit%, @logger]
+        lazy: true
+        tags:
+          - { name: backlinks.provider, alias: moz }
+
+    backlinks_seokicks:
+        class:        "WebDNA\Bundle\AppBundle\ApiClient\Backlinks\SEOkicks"
+        arguments:    [%seokicks_appid%, %seokicks_backlinks_fetch_limit%, @logger]
+        lazy: true
+        tags:
+          - { name: backlinks.provider, alias: seokicks }
+
+    # *** Experimental ***
+    backlinks_openlinkprofiler:
+        class:        "WebDNA\Bundle\AppBundle\ApiClient\Backlinks\OpenLinkProfiler"
+        arguments:    [5, @logger]
+        lazy: true
+        tags:
+          - { name: backlinks.provider, alias: openlinkprofiler }
+
+    backlinks:
+        class:        "WebDNA\Bundle\AppBundle\ApiClient\Backlinks\\Provider"
+        arguments:    ["@backlinks_moz"]
+        lazy: true
+
+    backlinks_chain:
+        class:        WebDNA\Bundle\AppBundle\Chain\BacklinksChain
+        arguments:    [@logger]
+        lazy: true
+
+    url_metrics_moz:
+        class:        "WebDNA\Bundle\AppBundle\ApiClient\UrlMetrics\\MOZ"
+        arguments:    [%moz_access_keys%]
+        lazy: true
+
+    # Google Safe Browsing services
+    google_safe_browsing:
+        class:        "phpGSB"
+        arguments:    [%gsb_database_name%, %gsb_database_user%, %gsb_database_password%, %gsb_database_host%, false]
+        properties:
+            apikey:   %google_safe_browsing_api_key%
+            usinglists: ['googpub-phish-shavar', 'goog-malware-shavar']
+            pingfilepath: %google_safe_browsing_ping_file_path%
+        lazy: true
+
+    # Twig extension services
+    twig.item_analysis_extension:
+        class: WebDNA\Bundle\AppBundle\Twig\ItemAnalysisExtension
+        arguments: [@item_analyzes]
+        tags:
+          - { name: twig.extension }
+
+    twig.page_class_extension:
+        class: WebDNA\Bundle\AppBundle\Twig\PageClassExtension
+        tags:
+          - { name: twig.extension }
+
+    twig.metrics_extension:
+        class: WebDNA\Bundle\AppBundle\Twig\MetricsSummaryExtension
+        tags:
+          - { name: twig.extension }
+
+    twig.item_metrics_extension:
+        class: WebDNA\Bundle\AppBundle\Twig\ItemMetricsExtension
+        tags:
+          - { name: twig.extension }
+
+    twig.humanizer_extension:
+        class: WebDNA\Bundle\AppBundle\Twig\HumanizerExtension
+        tags:
+          - { name: twig.extension }
+
+    twig.class_extension:
+        class: WebDNA\Bundle\AppBundle\Twig\ClassExtension
+        tags:
+          - { name: twig.extension }
+
+    # OneUploader services
+    upload.upload_listener:
+        class: "WebDNA\Bundle\AppBundle\EventListener\UploadListener"
+        arguments: ["@analysis_processes", "@analysis_process_inputs", "@filesystem_analysis_process_inputs", "@analysis_process_urls"]
+        tags:
+          - { name: kernel.event_listener, event: oneup_uploader.post_persist, method: onUpload }
+          - { name: kernel.event_listener, event: oneup_uploader.validation, method: onValidate }
+          - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
+
+    uploader.namer.analysis_input_uniqid_namer:
+        class: "WebDNA\Bundle\AppBundle\Uploader\\Naming\AnalysisInputUploadNamer"
+
+    # Rserve
+    rserve_server:
+        class:        "Rserve_Connection"
+        arguments:    ["%rserve_host%", %rserve_port%]
+        lazy: true
+        scope: prototype
+
+    rserve_client:
+        class:        "WebDNA\Bundle\AppBundle\ApiClient\Rserve\Client"
+        arguments:    ["@rserve_server"]
+        lazy: true
+        scope: prototype
+
+    sybilla_client:
+        class:        "WebDNA\Bundle\AppBundle\ApiClient\Rserve\Sybilla"
+        arguments:    ["@rserve_server"]
+        lazy: true
+        scope: prototype
+
+    # Voters
+    security.access.analysis_voter:
+        class:      WebDNA\Bundle\AppBundle\Secutiry\Voter\AnalysisVoter
+        public:     false
+        tags:
+           - { name: security.voter }
+        lazy: true
+
+    security.access.website_voter:
+        class:      WebDNA\Bundle\AppBundle\Secutiry\Voter\WebsiteVoter
+        public:     false
+        tags:
+           - { name: security.voter }
+        lazy: true
+
+    # Analysis process events
+    analysis_process:
+        class:      WebDNA\Bundle\AppBundle\EventListener\AnalysisListener
+        arguments:  ["@service_container"]
+        tags:
+          - { name: kernel.event_listener, event: analysis.started, method: onStarted }
+          - { name: kernel.event_listener, event: analysis.finished, method: onFinished }
+        lazy: true
+
+    # AmazonS3 cloud storage
+    storage.aws_s3.client:
+            class: Aws\S3\S3Client
+            factory_class: Aws\S3\S3Client
+            factory_method: 'factory'
+            arguments:
+                -
+                    key: %amazon_s3.key%
+                    secret: %amazon_s3.secret_key%
+#                    region: %amazon_s3.region%
+
+    # Event subscribers
+    analysis_subscriber:
+        class: WebDNA\Bundle\AppBundle\EventSubscriber\AnalysisSubscriber
+        arguments: ["@analysis_processes", "@events"]
+        tags:
+            - { name: kernel.event_subscriber }

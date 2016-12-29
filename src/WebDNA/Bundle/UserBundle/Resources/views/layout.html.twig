@@ -1,0 +1,16 @@
+{% extends '::base.html.twig' %}
+
+{% block content %}
+    {% block fos_user_content %}{% endblock fos_user_content %}
+{% endblock %}
+
+
+{% block footer_scripts %}
+    {{ parent() }}
+    {% javascripts 'bundles/webdnaapp/frontend/startup/flat-ui/js/flatui-checkbox.js' %}
+    <script src="{{ asset_url }}" type="text/javascript"></script>
+    {% endjavascripts %}
+    <script>
+        $(':checkbox').checkbox();
+    </script>
+{% endblock %}

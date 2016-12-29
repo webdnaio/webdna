@@ -1,0 +1,33 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block fos_user_content %}
+    <section class="content-24 bg-gray first-section">
+        <img class="image" style="left: 50%; right: 0%;" src="{{ asset('bundles/webdnaapp/frontend/img/about_us/dashboard.png') }}" alt="">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-5 col-sm-offset-0">
+                    <div class="features features-clear">
+                        <div class="features-bodies" style="height: 380px;">
+                            <div class="features-body active" style="height: 380px;">
+                                <h3>Thank you!</h3>
+                                <h3>Now you can discover all features of WebDNA...</h3>
+                                <p>
+                                    Just try to run your first backlink quality analysis.
+                                    Wish you high rankings and good quality backlinks.
+                                </p>
+                                <p>
+                                    <i>WebDNA.io team</i>
+                                </p>
+                                <div class="btns">
+                                    <a class="btn btn-primary btn-clear" href="{{ path('user_workbench_dashboard_index') }}">Go to dashboard</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

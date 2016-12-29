@@ -1,0 +1,29 @@
+    <div class="row">
+
+        <div class="col-md-3 col-sm-3 col-xs-4 box-title">
+            <p>
+                Our<br />team
+            </p>
+        </div>
+        <div class="col-md-7 col-sm-9 col-xs-8">
+
+            <div id="carousel" class="carousel slide" data-ride="carousel">
+
+                <ol class="carousel-indicators">
+                    <li data-target="#carousel" data-slide-to="0" class="active"></li>
+                    <li data-target="#carousel" data-slide-to="1"></li>
+                    <li data-target="#carousel" data-slide-to="2"></li>
+                </ol>
+
+                <div class="carousel-inner">
+                    {% include 'WebDNAAppBundle:Default/partials:aboutUs_inner.html.twig' %}
+                </div>
+
+            </div>
+
+        </div>
+        <div class="col-md-2 hidden-sm hidden-xs quote">
+            <img src="{{ asset('bundles/webdnaapp/frontend/img/quote_icon.png') }}" alt="quote" class="img-responsive" />
+        </div>
+
+    </div>

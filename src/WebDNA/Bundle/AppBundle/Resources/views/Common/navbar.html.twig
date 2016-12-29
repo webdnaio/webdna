@@ -1,0 +1,49 @@
+{% set main = app.request.get('_route') == 'homepage' %}
+
+<header class="header-1" style="z-index: 9999;">
+    <div class="container">
+        <div class="row">
+            <div class="navbar col-sm-12 navbar-fixed-top" role="navigation" style="top: {% if main %}45{% else %}-6{% endif %}px;">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle"></button>
+
+                    <a class="brand" href="{{ path('homepage') }}" title="WEBDNA.IO - Control your website">
+                        <img src="{{ asset('bundles/webdnaapp/frontend/img/logo_white.png') }}" alt="WEBDNA logo" class="img-responsive" style="{% if not main %}width: auto; height: 25px; margin-top: 6px;{% endif %}" />
+                    </a>
+                </div>
+                <div class="collapse navbar-collapse">
+                    {{ knp_menu_render('WebDNAAppBundle:Builder:topMenu') }}
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+{% if main %}
+    <section class="header-1-sub">
+        <div id="pt-main" class="page-transitions pt-perspective">
+            <div class="pt-page pt-page-1">
+                <div class="background" style="background-image: url({{ asset('bundles/webdnaapp/frontend/img/laptop.png') }});">&nbsp;</div>
+                {% if main %}
+                    <div class="caption">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-sm-offset-7 col-xs-offset-7">
+                                    <h3>Improve Your Website’s<br>Search Engine Visibility</h3>
+                                    <p class="lead hidden-xs" style="margin: 58px 0 34px 0;">
+                                        Control your digital footprint
+                                    </p>
+                                    {#
+                                    <a id="sign-up-button" class="btn btn-large btn-danger" href="{{ url('fos_user_registration_register') }}">Try WebDNA now</a>
+                                    #}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+{% else %}
+    <div class="header-1-startup-antiflicker header-antiflicker" style="opacity: 1.0001; position: fixed; z-index: 9990; left: 0px; top: 0px; width: 100%; height: 70px; background-color: rgb(54, 57, 64);"></div>
+{% endif %}

@@ -1,0 +1,19 @@
+<div class="nav-tabs-custom report-tabs">
+        <ul class="list-inline strong">
+            <li>
+                <a href="{{ path('user_workbench_report_table', {analysisProcess: analysisProcess.id, website: website.id, reportType: 'url'}) }}">
+                    <input type="radio"{% if reportType == 'url' %} checked{% endif %} name="reportType"> URL report
+                </a>
+            </li>
+            <li>
+                <a href="{{ path('user_workbench_report_table', {analysisProcess: analysisProcess.id, website: website.id, reportType: 'expert'}) }}">
+                    <input type="radio"{% if reportType == 'expert' %} checked{% endif %} name="reportType"> Extended URL report
+                </a>
+            </li>
+            <li>
+                <a href="{{ path('user_workbench_website_groups', {analysisProcess: analysisProcess.id, website: website.id}) }}">
+                    <input type="radio"{% if reportType == 'domain' %} checked{% endif %} name="reportType"> Domain report
+                </a>
+            </li>
+        </ul>
+</div>

@@ -1,0 +1,180 @@
+{% extends "WebDNAAppBundle:UserWorkbench:base.html.twig" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    {% stylesheets filter='cssrewrite'
+    'bundles/webdnaapp/shared/plugins/dropzone/dist/min/dropzone.min.css' %}
+    <link rel="stylesheet" href="{{ asset_url }}" type="text/css"/>
+    {% endstylesheets %}
+{% endblock %}
+
+{% block breadcrumbs %}
+    {{ breadcrumbs.crumb({ 'dashboard_website_check': {'name': 'Select backlinks source for ' ~ website.name, 'active': '1'} }) }}
+{% endblock %}
+
+{% block main_content %}
+    <div class="row">
+        <div class="col-md-12">
+            {% include 'WebDNAAppBundle:UserWorkbench/Website:progressLine.html.twig' %}
+        </div>
+    </div>
+
+    <div class="box box-default m-t-20">
+
+        <div class="row m-t-20">
+
+            <div class="col-md-9 col-md-offset-1 text-center h1">
+                Select backlinks source for {{ website.name }}
+            </div>
+
+        </div>
+
+        <div class="row m-t-20">
+            <div class="col-md-3 col-md-offset-1 text-center">
+                <h3>Automatic</h3>
+
+                <div onclick="showSubmitForm(this, 'submiBacklinksFetchAuto');"
+                     class="btn btn-default webdna-btn-submit font-16">
+                    <i class="fa fa-cloud-download font-28"></i>
+                    <br>
+                    Get sample links
+                </div>
+
+            </div>
+            <div class="col-md-3 text-center">
+                <h3>Upload file</h3>
+
+                <div onclick="showSubmitForm(this, 'submiBacklinksUpload');"
+                     class="btn btn-default webdna-btn-submit font-16">
+                    <i class="fa fa-upload font-28"></i>
+                    <br>
+                    Upload backlinks file
+                </div>
+            </div>
+            <div class="col-md-3 text-center">
+                <h3>Paste text</h3>
+
+                <div onclick="showSubmitForm(this, 'submiBacklinksClipboard');"
+                     class="btn btn-default webdna-btn-submit font-16">
+                    <i class="fa fa-clipboard font-28"></i>
+                    <br>
+                    Paste from clipboard
+                </div>
+            </div>
+        </div>
+
+        <div class="row p-t-30">
+            <div class="col-md-9 col-md-offset-1 col-sm-6 text-center">
+                <div class="panel-group">
+                    <div id="submiBacklinksFetchAuto" class="panel hide">
+                        <div>
+                            <div class="panel-body">
+                                <p>You're just one click away from receiving an instant analysis of up to 650 backlinks
+                                    from different sources. For free!.</p>
+
+                                <form action="" method="post">
+                                    <div class="row form-row">
+                                        <div class="col-md-12">
+                                            <input type="submit" class="btn btn-primary btn-cons font-28"
+                                                   value="Analyse"/>
+                                        </div>
+                                    </div>
+                                    {{ form_rest(mozForm) }}
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="submiBacklinksUpload" class="panel hide">
+                        <div>
+                            <div class="panel-body">
+                                <p>You can download inbound links file for your site using Google Webmasters Tools (<a
+                                            target="_blank"
+                                            href="http://blog.webdna.io/how-to-get-your-sites-inbound-links-file-from-google/">read
+                                        our guide</a>).</p>
+
+                                <form id="uploadForm" action="{{ oneup_uploader_endpoint('backlinks') }}"
+                                      class="dropzone m-b-10">
+                                    <input type="hidden" name="analysis_process_id"
+                                           value="{{ analysisProcess.id }}"/>
+                                </form>
+
+                                <form action="" method="post">
+                                    <div class="row form-row">
+                                        <div class="col-md-12">
+                                            <input id="uploadFormSubmit" disabled type="submit"
+                                                   class="btn btn-primary btn-cons font-28" value="Analyse"/>
+                                        </div>
+                                    </div>
+                                    {{ form_rest(afterUploadForm) }}
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="submiBacklinksClipboard" class="panel hide">
+                        <div>
+                            <div class="panel-body">
+                                <p>Select and copy links from a TXT, XLS or CSV file and paste them below.</p>
+
+                                <form action="" method="post">
+                                    <div class="row form-row">
+                                        <div class="col-md-10 col-md-offset-1">
+                                            {{ form_widget(inlineForm.links) }}
+                                        </div>
+                                    </div>
+                                    <div class="row form-row m-t-10">
+                                        <div class="col-md-12">
+                                            <input type="submit" class="btn btn-primary btn-cons font-28"
+                                                   value="Upload"/>
+                                        </div>
+                                    </div>
+                                    {{ form_rest(inlineForm) }}
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block footer_scripts %}
+    {{ parent() }}
+    {% javascripts
+    '@WebDNAAppBundle/Resources/public/shared/plugins/dropzone/dist/min/dropzone.min.js' %}
+    <script src="{{ asset_url }}" type="text/javascript"></script>
+    {% endjavascripts %}
+    <script>
+        Dropzone.options.uploadForm = {
+            init: function () {
+                this.on("success", function (file) {
+                    $('#uploadFormSubmit').removeAttr('disabled');
+                });
+            }
+        };
+        Dropzone.options.createImageThumbnails = false;
+        Dropzone.options.dictDefaultMessage = 'Drop files';
+        Dropzone.options.dictInvalidFileType = 'Invalid file';
+        Dropzone.options.dictResponseError = 'Response error';
+
+        function showSubmitForm(el, id) {
+            var $el = $(el),
+                $id = $('#' + id);
+
+            $('.webdna-btn-submit').removeClass('btn-primary').addClass('btn-default');
+            $el.removeClass('btn-default').addClass('btn-primary');
+
+            $('.panel-group .panel').addClass('hide');
+            $id.removeClass('hide');
+
+            jQuery('body').animate({
+                scrollTop: $id.offset().top
+            }, 250);
+        }
+
+    </script>
+{% endblock %}

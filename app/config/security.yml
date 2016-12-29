@@ -1,0 +1,41 @@
+security:
+    encoders:
+        FOS\UserBundle\Model\UserInterface: sha512
+
+    role_hierarchy:
+        # Main application roles
+        ROLE_ADMIN:       ROLE_USER
+        ROLE_SUPER_ADMIN: ROLE_ADMIN
+
+        # Link verifier bundle roles
+        ROLE_VERIFIER:    ROLE_USER
+        ROLE_VERIFIER_ADMIN:    [ROLE_ADMIN, ROLE_VERIFIER]
+
+    providers:
+        fos_userbundle:
+            id: fos_user.user_provider.username_email
+
+    firewalls:
+        main:
+            switch_user: { role: ROLE_ADMIN, parameter: "%switch_user_param%" }
+            pattern: ^/
+            form_login:
+                        provider: fos_userbundle
+                        csrf_provider: form.csrf_provider
+                        default_target_path: user_workbench_dashboard_index
+            anonymous: true
+            logout:
+                        target: logout_success
+            remember_me:
+                        key:      "%secret%"
+                        lifetime: 31536000 # 365 days in seconds
+                        path:     /
+                        domain:   ~ # Defaults to the current domain from $_SERVER
+
+    access_control:
+        - { path: "^/login",  roles: IS_AUTHENTICATED_ANONYMOUSLY}
+        - { host: "(.+)?webdna.io", path: "^/verifier", role: ROLE_VERIFIER}
+        - { path: "^/dashboard", role: ROLE_USER}
+        - { host: "(.+)?webdna.io", path: "^/discover-your-website", role: ROLE_ADMIN}
+        - { host: "(.+)?webdna.io", path: "^/admin", role: ROLE_ADMIN}
+        - { host: "(.+)?webdna.io", path: "^/sitemap", role: ROLE_ADMIN}

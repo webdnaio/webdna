@@ -1,0 +1,150 @@
+<tr class="detailsRow">
+    <td colspan="6" class="h-border">
+
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th colspan="2">Overall Performance</th>
+                        <th colspan="2" class="bl15">Links Performance</th>
+                        <th colspan="2" class="bl15">HTML Performance</th>
+                        <th colspan="2" class="bl15">Health Check</th>
+                    </tr>
+                    </thead>
+                    <tr>
+                        <td>
+                            {% if page.metaTitle is defined %}
+                                Title
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if page.metaTitle is defined %}
+                                {{ page.metaTitle }}
+                            {% endif %}
+                        </td>
+                        <td class="bl15">Pointing links</td>
+                        <td>
+                            {% if pageItemMetrics.documentLinksAttrFollow['Website follow links count'] > 0 or pageItemMetrics.documentLinksAttrFollow['Website nofollow links count'] > 0 %}
+                                {{ (
+                                pageItemMetrics.documentLinksAttrFollow['Website follow links count']
+                                +
+                                pageItemMetrics.documentLinksAttrFollow['Website nofollow links count']
+                                )
+                                }}
+                                ({{ pageItemMetrics.documentLinksAttrFollow['Website nofollow links count'] }} nofollow)
+                            {% else %}
+                                0
+                            {% endif %}
+                        </td>
+                        <td class="bl15">Characters overall</td>
+                        <td>
+                            {{ pageItemMetrics.documentHtmlTextStructure['Characters overall']|number_format(0, '', ' ') }}
+                        </td>
+                        <td class="bl15">Website load time</td>
+                        <td>{{ pageItemMetrics.urlPerformance['Load time'] }}</td>
+                    </tr>
+                    <tr>
+                        <td>Meta title length</td>
+                        <td>
+                            {% if page.metaTitle is defined %}
+                                {{ page.metaTitle|length }}
+                            {% endif %}
+                        </td>
+                        <td class="bl15">Total links on site</td>
+                        <td>{{ pageItemMetrics.documentLinksAttrFollow['Total links count']|number_format(0, '', ' ') }}</td>
+                        <td class="bl15">Only text characters</td>
+                        <td>{{ pageItemMetrics.documentHtmlTextStructure['Only text characters']|number_format(0, '', ' ') }}</td>
+                        <td class="bl15">Found in malware</td>
+                        <td>{{ pageItemMetrics.urlSecurity }}</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            {% if page.metaTitle is defined %}
+                                Found at
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if page.metaTitle is defined %}
+                                <a href="{{ page.url }}" target="_blank">{{ page.url }}</a>
+                            {% endif %}
+                        </td>
+                        <td class="bl15">Follow links found</td>
+                        <td>{{ pageItemMetrics.documentLinksAttrFollow['Follow links count'] }}</td>
+                        <td class="bl15">HTML2Text ratio</td>
+                        <td>{{ pageItemMetrics.documentHtmlTextStructure['HTML2Text ratio'] }}%</td>
+                        <td class="bl15">HTTP code</td>
+                        <td>{{ page.httpCode }}</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            {% if page.link is defined %}
+                                Link to
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if page.link is defined %}
+                                <a href="{{ page.link }}" target="_blank">{{ page.link }}</a>
+                            {% endif %}
+                        </td>
+                        <td class="bl15">Nofollow links found</td>
+                        <td>{{ pageItemMetrics.documentLinksAttrFollow['Nofollow links count'] }}</td>
+                        <td class="bl15"></td>
+                        <td></td>
+                        <td class="bl15">{% if websiteItemMetrics.internetArchive['Discovery date'] is defined %}Discovery time{% endif %}</td>
+                        <td>{% if websiteItemMetrics.internetArchive['Discovery date'] is defined %}{{ websiteItemMetrics.internetArchive['Discovery date']|humanize_time }}{% endif %}</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            {% if page.anchor is defined %}
+                                Anchor
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if page.anchor is defined %}
+                                {{ page.anchor }}
+                            {% elseif page.anchor is defined and page.anchor == '' %}
+                                (not found)
+                            {% endif %}
+                        </td>
+                        <td class="bl15"></td>
+                        <td></td>
+                        <td class="bl15"></td>
+                        <td></td>
+                        <td class="bl15">{% if websiteItemMetrics.domainMoz is defined %}Domain Authority{% endif %}</td>
+                        <td>
+                            {% if websiteItemMetrics.domainMoz is defined %}
+                                {{ websiteItemMetrics.domainMoz['Moz Domain Authority'] }}
+                            {% endif %}
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            {% if showRestrictedData == true %}
+                <div class="col-md-3 pull-right">
+
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Admin mode</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tr>
+                            <td>class_negative_similarity:</td>
+                            <td>{{ itemAnalysis.getClassNegativeSimilarity() }}</td>
+                        </tr>
+                        <tr>
+                            <td>class_positive_similarity:</td>
+                            <td>{{ itemAnalysis.getClassPositiveSimilarity() }}</td>
+                        </tr>
+                        {#
+                           // <tr><td>Moz Rank: </td><td>{{ pageItemMetrics.domainMoz.Moz Rank }}</td></tr>
+                        #}
+                    </table>
+                </div>
+            {% endif %}
+        </div>
+    </td>
+</tr>

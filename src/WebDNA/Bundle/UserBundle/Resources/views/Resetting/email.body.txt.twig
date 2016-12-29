@@ -1,0 +1,11 @@
+{% autoescape false %}
+Hi,
+
+We got information that you change your password.
+There is only one more step to do it.
+Please click link below to validate your request
+
+{{ confirmationUrl }}
+
+{% include "WebDNAUserBundle:Default:email_footer.html.twig" %}
+{% endautoescape %}

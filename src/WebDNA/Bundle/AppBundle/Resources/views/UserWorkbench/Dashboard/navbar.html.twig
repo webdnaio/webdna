@@ -1,0 +1,79 @@
+<header class="main-header">
+    <a href="{{ path('homepage') }}" class="logo">
+        <img src="{{ asset('bundles/webdnaapp/frontend/img/logo_wide_smaller.png') }}" width="151" height="30" alt="WebDNA.io logo" />
+    </a>
+
+    <nav class="navbar navbar-static-top" role="navigation">
+        <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </a>
+        <div class="navbar-custom-menu">
+            <ul class="nav navbar-nav">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                        {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
+                            <i class="glyphicon glyphicon-eye-open"></i>
+                        {% else %}
+                            <i class="glyphicon glyphicon-user"></i>
+                        {% endif %}
+
+                        {% if app.user.firstName %}
+                            {{ app.user.firstName }}
+                        {% else %}
+                            {{ app.user.email }}
+                        {% endif %}
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu" role="menu">
+                        {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
+                            <li>
+                                <a href="{{ path('admin_workbench_users') }}?{{ switch_user_param }}=_exit">
+                                    <i class="fa fa-sign-out"></i>
+                                    Exit impersonation
+                                </a>
+                            </li>
+                        {% endif %}
+
+                        {% if is_granted('ROLE_ADMIN') %}
+                        <li>
+                            <a href="{{ path('admin_workbench_analyzes') }}">
+                                <i class="fa fa-info"></i>
+                                Admin Control Panel
+                            </a>
+                        </li>
+                        {% endif %}
+
+                        <li>
+                            <a href="{{ path('fos_user_profile_edit') }}" title="{{ 'layout.logout'|trans({}, 'FOSUserBundle') }}">
+                                <i class="glyphicon glyphicon-pencil"></i>
+                                Edit profile
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ path('user_profile_notifications') }}" title="{{ 'layout.logout'|trans({}, 'FOSUserBundle') }}">
+                                <i class="glyphicon glyphicon-envelope"></i>
+                                Notifications settings
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{{ path('fos_user_change_password') }}" title="{{ 'layout.change_password'|trans({}, 'FOSUserBundle') }}">
+                                <i class="glyphicon glyphicon-lock"></i>
+                                Change password
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ path('fos_user_security_logout') }}" title="{{ 'layout.logout'|trans({}, 'FOSUserBundle') }}">
+                                <i class="glyphicon glyphicon-off"></i>
+                                Sign out
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>

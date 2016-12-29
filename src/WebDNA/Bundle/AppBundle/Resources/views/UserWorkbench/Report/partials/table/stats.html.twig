@@ -1,0 +1,80 @@
+{% set sum_of_urls = analysisProcessSummary.positive + analysisProcessSummary.negative + analysisProcessSummary.suspicious %}
+
+{% if sum_of_urls == 0 %}
+{% set sum_of_urls = 1 %}
+{% endif %}
+
+<div class="row">
+
+    <div class="col-sm-6 col-xs-12 hidden-md hidden-lg text-center">
+        <span class="label label-info">{{ analysisProcessSummary.linksFound }} backlinks found</span>
+        <span class="label label-danger">{{ analysisProcessSummary.negative }}
+            negative urls{% if analysisProcessSummary.malware > 0 %} (including {{ analysisProcessSummary.malware }} malware){% endif %}</span>
+        <span class="label label-warning">{{ analysisProcessSummary.suspicious }} suspicious urls</span>
+        <span class="label label-success">{{ analysisProcessSummary.positive }} positive urls</span>
+    </div>
+
+    <div class="col-md-3 col-sm-4 col-xs-12">
+        <div class="info-box bg-aqua hidden-sm hidden-xs">
+            <span class="info-box-icon"><i class="fa fa-flag-o"></i></span>
+
+            <div class="info-box-content">
+                <span class="info-box-text">Backlinks found</span>
+                <span class="info-box-number">{{ analysisProcessSummary.linksFound }}</span>
+            </div>
+        </div>
+    </div>
+
+    <a href="{{ path('user_workbench_report_table', { website: website.id, analysisProcess: analysisProcess.id }) }}?criteria[class]={{ class_positive }}">
+        <div class="col-md-3 col-sm-4 col-xs-12">
+            <div class="info-box bg-green hidden-sm hidden-xs">
+                <span class="info-box-icon"><i class="fa fa-thumbs-o-up"></i></span>
+
+                <div class="info-box-content">
+                    <span class="info-box-text">Positive urls</span>
+                    <span class="info-box-number">{{ analysisProcessSummary.positive }}</span>
+
+                    <div class="progress">{{ analysisProcessSummary.positive / sum_of_urls * 100 }}%"></div>
+                </div>
+            </div>
+        </div>
+    </a>
+
+    <a href="{{ path('user_workbench_report_table', { website: website.id, analysisProcess: analysisProcess.id }) }}?criteria[class]={{ class_suspicious }}">
+        <div class="col-md-3 col-sm-4 col-xs-12">
+            <div class="info-box bg-orange hidden-sm hidden-xs">
+                <span class="info-box-icon"><i class="fa fa-question-circle"></i></span>
+
+                <div class="info-box-content">
+                    <span class="info-box-text">Suspicious urls</span>
+                    <span class="info-box-number">{{ analysisProcessSummary.suspicious }}</span>
+
+                    <div class="progress">
+                        <div class="progress-bar"
+                             style="width: {{ analysisProcessSummary.suspicious / sum_of_urls * 100 }}%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </a>
+
+    <a href="{{ path('user_workbench_report_table', { website: website.id, analysisProcess: analysisProcess.id }) }}?criteria[class]={{ class_negative }}">
+        <div class="col-md-3 col-sm-4 col-xs-12">
+            <div class="info-box bg-red hidden-sm hidden-xs">
+                <span class="info-box-icon"><i class="fa fa-thumbs-o-down"></i></span>
+
+                <div class="info-box-content">
+                    <span class="info-box-text">Negative urls</span>
+                    <span class="info-box-number">{{ analysisProcessSummary.negative }}</span>
+
+                    <div class="progress">
+                        <div class="progress-bar"
+                             style="width: {{ analysisProcessSummary.negative / sum_of_urls * 100 }}%"></div>
+                    </div>
+                    <span class="progress-description">{{ analysisProcessSummary.malware }}
+                        malware url{% if analysisProcessSummary.malware != 1 %}s{% endif %}</span>
+                </div>
+            </div>
+        </div>
+    </a>
+</div>

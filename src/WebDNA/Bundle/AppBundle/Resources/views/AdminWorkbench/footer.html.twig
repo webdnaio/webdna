@@ -1,0 +1,56 @@
+<div id="footer">
+
+    <div class="container">
+
+        <div class="row">
+
+            <div class="col-md-2 col-sm-2 hidden-xs">
+                <a href="javascript:void(0)" class="scrollToTop"><img src="{{ asset('bundles/webdnaapp/frontend/img/logo_sm.png') }}" alt="WebDNA.io logo" /></a>
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-8 urls">
+                <h4>More about WEBDNA.IO</h4>
+                <div class="row">
+                    <div class="col-md-6 col-sm-12 col-xs-12">
+                        <a href="{% if app.request.get('_route') == 'page_about_us' %}#{% else %}{{ path('page_about_us') }}{% endif %}">About Us</a><br />
+                        <a href="{{ path('page_faq') }}">Support</a>
+                    </div>
+                    <div class="col-md-6 col-sm-12 col-xs-12">
+                        <a href="mailto:hello@webdna.io">Contact us</a><br />
+                        <a href="http://blog.webdna.io/">Blog</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-2 col-sm-4 col-xs-2 social">
+                <p>Be with us</p>
+                <a href="https://www.facebook.com/WebDNA.io" target="_blank" class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-flag fa-stack-1x fa-facebook"></i>
+                </a>
+                <a href="https://plus.google.com/+WebdnaIoapp" target="_blank" class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-flag fa-stack-1x fa-google-plus"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/web-dna" target="_blank" class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-flag fa-stack-1x fa-linkedin"></i>
+                </a>
+                <a href="http://youtube.com/user/webdnaio" target="_blank" class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-flag fa-stack-1x fa-youtube"></i>
+                </a>
+                <a href="https://twitter.com/WebDNAio" target="_blank" class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-flag fa-stack-1x fa-twitter"></i>
+                </a>
+
+            </div>
+
+        </div>
+
+        <div id="copyrights">
+            Copyrights &copy; WebDNA.io {{ "now"|date("Y") }}
+        </div>
+
+    </div>
+</div>

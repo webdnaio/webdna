@@ -1,0 +1,10 @@
+{% macro crumb(items) %}
+    <ol class="breadcrumb">
+        <li><a href="{{ path('user_workbench_dashboard_index') }}"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+        {% for item in items %}
+            <li{% if item.active is defined %} class="active"{% endif %}>
+                {% if item.href is defined %}<a href="{{ item.href }}">{% endif %}{{ item.name }}{% if item.href is defined %}</a>{% endif %}
+            </li>
+        {% endfor %}
+    </ol>
+{% endmacro %}

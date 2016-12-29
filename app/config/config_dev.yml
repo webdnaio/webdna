@@ -1,0 +1,64 @@
+imports:
+    - { resource: config.yml }
+
+framework:
+    router:
+        resource: "%kernel.root_dir%/config/routing_dev.yml"
+        strict_requirements: true
+    profiler: { only_exceptions: false }
+    ide: "phpstorm://open?file=%%f&line=%%1"
+
+web_profiler:
+    toolbar: true
+    intercept_redirects: false
+
+monolog:
+    handlers:
+        doctrine:
+            action_level: debug
+            type:  stream
+            path:  %kernel.logs_dir%/%kernel.environment%_doctrine.log
+            channels: doctrine
+        main:
+            type:   stream
+            path:   "%kernel.logs_dir%/%kernel.environment%.log"
+            level:  debug
+        console:
+            type:   console
+            bubble: false
+        # uncomment to get logging in your browser
+        # you may have to allow bigger header sizes in your Web server configuration
+        #firephp:
+        #    type:   firephp
+        #    level:  info
+        #chromephp:
+        #    type:   chromephp
+        #    level:  info
+
+assetic:
+    use_controller: false
+
+# Swiftmailer Configuration
+swiftmailer:
+    # delivery_address: me@example.com
+    transport: "%mailer_transport%"
+    host:      "%mailer_host%"
+    username:  "%mailer_user%"
+    password:  "%mailer_password%"
+
+# KNPGaufrette Bundle Configuration
+knp_gaufrette:
+    adapters:
+        main:
+            local:
+                directory: %kernel.root_dir%/../web/uploads
+        analysis_process_inputs:
+            local:
+                directory: %kernel.root_dir%/../uploads/analysis_processes/inputs
+    filesystems:
+        main:
+            adapter: main
+            alias:  filesystem_main
+        analysis_process_inputs:
+            adapter: analysis_process_inputs
+            alias:  filesystem_analysis_process_inputs

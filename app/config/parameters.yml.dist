@@ -1,0 +1,113 @@
+parameters:
+    database_driver:   pdo_mysql
+    database_host:     127.0.0.1
+    database_port:     ~
+    database_name:     webdna
+    database_user:     root
+    database_password: ~
+    
+    database_verifier_driver: pdo_mysql
+    database_verifier_host: localhost
+    database_verifier_port: ~
+    database_verifier_name: webdna_verifier
+    database_verifier_user: root
+    database_verifier_password: ~
+
+    gsb_database_driver: pdo_mysql
+    gsb_database_host: 127.0.0.1
+    gsb_database_port: ~
+    gsb_database_name: google_safe_browsing
+    gsb_database_user: root
+    gsb_database_password: ~
+
+    mailer_transport: ~
+    mailer_host: ~
+    mailer_user: noreply@webdna.local
+    mailer_password: ~
+
+    locale:            en
+    secret:            ThisTokenIsNotSoSecretChangeIt
+
+    node:
+    node_paths:
+
+    rabbitmq_host:
+    rabbitmq_port:
+    rabbitmq_user:
+    rabbitmq_password:
+    rabbitmq_vhost:
+
+    session_memcache_host: 127.0.0.1
+    session_memcache_port: 11211
+    session_memcache_prefix: sess_
+    session_memcache_expire: 86400
+
+    redis_host: redis://localhost
+    redis_prefix: null
+
+    command_domain_user_analysis_queue_parallelism:
+    command_domain_system_analysis_queue_parallelism:
+    command_url_analysis_queue_parallelism:
+    command_failed_queue_parallelism:
+    command_aborted_queue_parallelism:
+    queue_link_analysis_parallelism: 5
+    queue_demo_link_analysis_parallelism: 5
+    queue_internal_link_analysis_parallelism: 5
+    queue_backlinks_parallelism: 5
+
+    google_safe_browsing_api_key:
+    google_safe_browsing_ping_file_path: /tmp/
+
+    proxy_market_access_key: ~
+
+    moz_access_id:
+    moz_backlinks_fetch_limit: 50
+    moz_secret_key:
+    moz_access_keys:
+      - [ member-test, test123 ]
+
+    seokicks_appid: ~
+    seokicks_backlinks_fetch_limit: 200
+
+    rserve_host: localhost
+    rserve_port: 6311
+
+    sitemap_php_key:
+    sitemap_php_spider: sitemap
+    sitemap_php_project: 5569
+    sitemap_php_save_path: tmp
+    sitemap_php_save_filename: sitemap
+
+    oauth_redirect_uri: /user/connect
+    oauth_facebook_client_id:
+    oauth_facebook_secret_key:
+    oauth_facebook_scope: email, public_profile
+    oauth_google_client_id:
+    oauth_google_secret_key:
+    oauth_google_scope: email, profile
+    oauth_twitter_client_id:
+    oauth_twitter_secret_key:
+    oauth_twitter_scope: email
+    oauth_github_client_id:
+    oauth_github_secret_key:
+    oauth_github_scope: email
+
+    sender_name: WebDNA.io
+    sender_email_address: ~
+
+    proxy_market_access_key:
+
+    router.request_context.host:
+    router.request_context.scheme:
+
+    switch_user_param: user_switch_mode_id
+
+    blog_feed_url: ~
+    blog_cache_path: ~
+
+    amazon_s3.key: ~
+    amazon_s3.secret_key: ~
+
+    recaptcha.secret:
+    recaptcha.sitekey:
+    recaptcha.enabled: false

@@ -1,0 +1,47 @@
+<div class="btn-group">
+
+    <button id="domainGroups" class="btn btn-default dropdown-toggle"
+            data-toggle="dropdown" aria-expanded="false">
+        <span>Mark whole domain as...</span>
+        <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu pull-right" role="menu" id="domain-groups-mark-menu" aria-labelledby="domainGroups">
+        <li>
+            <a tabindex="1" role="menuitem" href="#" class="classifyWebsite"
+               data-rating="{{ class_positive }}"><i
+                        class="fa fa-circle-o text-green"></i>
+                Positive
+                {% if currentClass == class_positive %}
+                    (current)
+                {% endif %}
+            </a>
+        </li>
+        <li>
+            <a tabindex="2" role="menuitem" href="#" class="classifyWebsite"
+               data-rating="{{ class_suspicious }}"><i
+                        class="fa fa-circle-o text-orange"></i>
+                Suspicious
+                {% if currentClass == class_suspicious %}
+                    (current)
+                {% endif %}
+            </a>
+        </li>
+        <li>
+            <a tabindex="3" role="menuitem" href="#" class="classifyWebsite"
+               data-rating="{{ class_negative }}"><i
+                        class="fa fa-circle-o text-red"></i>
+                Negative
+                {% if currentClass == class_negative %}
+                    (current)
+                {% endif %}
+            </a>
+        </li>
+        {% if currentClass > 0 %}
+            <li>
+                <a tabindex="4" href="#" class="classifyWebsite" data-rating="revert"><i class="fa fa-reply-all"></i>
+                    Revert changes
+                </a>
+            </li>
+        {% endif %}
+    </ul>
+</div>

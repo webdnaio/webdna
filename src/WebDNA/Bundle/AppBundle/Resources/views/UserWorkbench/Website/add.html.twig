@@ -1,0 +1,37 @@
+{% extends "WebDNAAppBundle:UserWorkbench:base.html.twig" %}
+
+{% block breadcrumbs %}
+    {{ breadcrumbs.crumb({ 'dashboard_website_check': {'name': 'Add website to analyse', 'active': '1'} }) }}
+{% endblock %}
+
+{% block page_header %}
+    <h1>Enter your website URL</h1>
+{% endblock %}
+
+{% block main_content %}
+    <form action="" method="post">
+
+        {% include 'WebDNAAppBundle:UserWorkbench/Website:progressLine.html.twig' %}
+
+        {% if form is defined %}
+
+            <div class="row form-row">
+
+                <div class="col-xs-5 col-xs-offset-3 text-center2">
+                    <div class="form-group {% if form.vars.errors|length %}has-error{% endif %}">
+                        {{ form_widget(form.name) }}
+                        {{ form_errors(form.name) }}
+                    </div>
+                </div>
+            </div>
+            <div class="row form-row" style="margin-top: 20px;">
+                <div class="col-xs-5 col-xs-offset-3 text-center">
+                    <button type="submit" class="btn btn-primary btn-lg btn-cons">Analyse</button>
+                </div>
+                {{ form_rest(form) }}
+
+            </div>
+
+        {% endif %}
+    </form>
+{% endblock %}

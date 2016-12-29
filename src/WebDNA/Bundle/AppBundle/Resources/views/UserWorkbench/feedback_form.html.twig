@@ -1,0 +1,31 @@
+<i class="fa fa-close pull-right feedback-close"></i>
+
+<div class="hidden feedback-success">
+    <h3>Thank you!</h3>
+
+    <small>Your message has been sent to us, we will reply as soon as it possible.</small>
+</div>
+
+<div class="hidden feedback-error">
+    <h3>Ups, something went really wrong...</h3>
+
+    <small>Please, submit your request one more time.</small>
+</div>
+
+<div class="feedback-header">
+    <h3>Leave us a message</h3>
+
+    <small>You can also contact us <a href="mailto:hello@webdna.io">by email</a>.</small>
+</div>
+
+<form id="feedback-form" action="{{ path('feedback_form') }}" method="post">
+    <textarea id="feedback-message" name="message" required="required"
+          class="form-control form-control" rows="8" placeholder="Your message"></textarea>
+
+    <div class="text-center">
+        <button disabled type="submit" class="btn btn-primary btn-cons">
+            <i id="feedback-spin" class="fa fa-refresh fa-spin hidden"></i>
+            Send
+        </button>
+    </div>
+</form>

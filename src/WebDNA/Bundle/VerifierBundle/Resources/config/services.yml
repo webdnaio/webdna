@@ -1,0 +1,48 @@
+services:
+    verifier_website_repository:
+        class: Doctrine\Common\Persistence\ObjectRepository
+        factory_service: doctrine
+        factory_method: getRepository
+        arguments: [WebDNAVerifierBundle:Website, 'verifier']
+        lazy: true
+
+    verifier_page_repository:
+        class: Doctrine\Common\Persistence\ObjectRepository
+        factory_service: doctrine
+        factory_method: getRepository
+        arguments: [WebDNAVerifierBundle:Page, 'verifier']
+        lazy: true
+
+    verifier_queue_repository:
+        class: Doctrine\Common\Persistence\ObjectRepository
+        factory_service: doctrine
+        factory_method: getRepository
+        arguments: [WebDNAVerifierBundle:Queue, 'verifier']
+        lazy: true
+
+    verifier_rating_repository:
+        class: Doctrine\Common\Persistence\ObjectRepository
+        factory_service: doctrine
+        factory_method: getRepository
+        arguments: [WebDNAVerifierBundle:Rating, 'verifier']
+        lazy: true
+
+    verifier_websites:
+        class:        "WebDNA\Bundle\VerifierBundle\Repository\Service\\WebsiteService"
+        arguments:    ["@verifier_website_repository"]
+        lazy: true
+
+    verifier_pages:
+        class:        "WebDNA\Bundle\VerifierBundle\Repository\Service\\PageService"
+        arguments:    ["@verifier_page_repository"]
+        lazy: true
+
+    verifier_queues:
+        class:        "WebDNA\Bundle\VerifierBundle\Repository\Service\\QueueService"
+        arguments:    ["@verifier_queue_repository", @verifier_pages]
+        lazy: true
+
+    verifier_ratings:
+        class:        "WebDNA\Bundle\VerifierBundle\Repository\Service\\RatingService"
+        arguments:    ["@verifier_rating_repository"]
+        lazy: true

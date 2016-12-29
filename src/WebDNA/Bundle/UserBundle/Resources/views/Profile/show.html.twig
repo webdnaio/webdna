@@ -1,0 +1,12 @@
+{% extends "WebDNAAppBundle:UserWorkbench:base.html.twig" %}
+
+{% block sidebar_content %}{% endblock %}
+
+{% block breadcrumbs %}
+    {{ breadcrumbs.crumb({ 'profile_edit': {'name': 'Profile', 'active': '1'} }) }}
+{% endblock %}
+
+{% block main_content %}
+{% include "FOSUserBundle:Profile:show_content.html.twig" %}
+    <a href="{{ path('fos_user_profile_edit') }}" class="btn btn-primary btn-cons pull-right">Edit profile data</a>
+{% endblock main_content %}

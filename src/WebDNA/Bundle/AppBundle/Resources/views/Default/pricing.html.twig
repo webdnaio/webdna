@@ -1,0 +1,86 @@
+{% extends '::base.html.twig' %}
+
+{% block meta_title %}Pricing{% endblock %}
+
+{% block content %}
+    <section class="price-1 v-center">
+        <div class="container">
+
+            <h3 class="text-center">Take a look to our Plans</h3>
+
+            <div class="row plans">
+                <div class="col-sm-3">
+                    <div class="plan">
+                        <div class="title">Small business</div>
+                        <div class="price">99$/month</div>
+                        <div class="description">
+                            <br>
+                            <b>1</b> domain<br>
+                            <b>1.5 mln</b> total urls analysed<br>
+                            <b>up to 500</b> automatic backlinks discovery<br>
+                            <b>twice a month</b> data refresh<br>
+
+                        </div>
+                        <a class="btn disabled" href="#">Comming soon</a>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="plan">
+                        <div class="title">Consultant</div>
+                        <div class="price">199$/month</div>
+                        <div class="description">
+                            <br>
+                            <b>5</b> domains<br>
+                            <b>1.5 mln</b> total urls analysed<br>
+                            <b>up to 2000</b> automatic backlinks discovery<br>
+                            <b>every week</b> data refresh<br>
+
+                        </div>
+                        <a class="btn disabled" href="#">Comming soon</a>
+
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="plan">
+                        <div class="title">Agency</div>
+                        <div class="price">499$/month</div>
+                        <div class="description">
+                            <br>
+                            <b>50</b> domains<br>
+                            <b>2.5 mln</b> total urls analysed<br>
+                            <b>up to 8000</b> automatic backlinks discovery<br>
+                            <b>every 3 days</b> data refresh<br>
+
+                        </div>
+                        <a class="btn disabled" href="#">Comming soon</a>
+                    </div>
+                </div>
+
+                <div class="col-sm-3">
+                    <div class="plan">
+                        <div class="title">Enterprise</div>
+                        <div class="price">contact us</div>
+                        <div class="description">
+                            <br>
+                            <b>50+</b> domains<br>
+                            <b>6 mln</b> total urls analysed<br>
+                            <b>8000+</b> automatic backlinks discovery<br>
+                            <b>every day</b> data refresh<br>
+
+                        </div>
+                        <a class="btn disabled" href="#">Comming soon</a>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <section class="content-11" style="background-color: #fff; padding: 70px 0">
+                    <div class="container">
+                        <a class="btn btn-large btn-danger text-center" href="{{ url('contact_form') }}">Contact us</a>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </section>
+
+    {% include 'WebDNAAppBundle:Common:betaInvitation.html.twig' %}
+{% endblock %}

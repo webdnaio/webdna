@@ -1,0 +1,150 @@
+{% extends "WebDNAAppBundle:UserWorkbench:base.html.twig" %}
+
+{% block meta_title %}Web DNA - {{ website.name }} toxic link report{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    {% stylesheets filter='cssrewrite'
+        'bundles/webdnaapp/shared/plugins/admin-lte/plugins/iCheck/flat/green.css'
+    %}
+
+    <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+    {% endstylesheets %}
+{% endblock %}
+
+{% block header_scripts %}
+    {{ parent() }}
+    {% javascripts
+    '@WebDNAAppBundle/Resources/public/frontend/js/workbench/report.min.js'
+    '@WebDNAAppBundle/Resources/public/frontend/js/workbench/dashboard.min.js'
+    '@WebDNAAppBundle/Resources/public/shared/plugins/admin-lte/plugins/iCheck/icheck.min.js'
+    %}
+    <script src="{{ asset_url }}" type="text/javascript"></script>
+    {% endjavascripts %}
+{% endblock %}
+
+{% block page_header %}
+    {% if website is defined %}
+        <h1>Toxic link report for {{ website.name }}</h1>
+        {% if groupedWebsite is not null %}
+            <h5>restricted to urls from {{ groupedWebsite.name }}</h5>
+        {% endif %}
+
+    {% endif %}
+{% endblock %}
+
+{% block breadcrumbs %}
+    {{ breadcrumbs.crumb({ 'dashboard_website_check': {'name': website.name, 'active': '1'} }) }}
+{% endblock %}
+
+{% block action_menu %}
+
+    {% if isAnyPendingAnalysis == false or analysisProcessSummary.analyzedDomains is defined %}
+        <li>
+    {% endif %}
+
+    {% if isAnyPendingAnalysis == false %}
+        <a href="{{ path('user_workbench_website_repeat_analysis', {website: website.id}) }}">
+            <div class="btn btn-flat btn-block btn-glassbox navy-hover">
+                <i class="fa fa-repeat"></i>
+                Repeat analysis
+            </div>
+        </a>
+    {% endif %}
+
+    {% if analysisProcessSummary.analyzedDomains is defined %}
+        <a href="{{ path('user_workbench_disavow_index', {analysisProcess: analysisProcess.id}) }}">
+            <div class="btn btn-flat btn-block btn-glassbox red-hover">
+                    <i class="fa fa-bolt"></i>
+                    Remove toxic links
+            </div>
+        </a>
+    {% endif %}
+
+    {% if isAnyPendingAnalysis == false or analysisProcessSummary.analyzedDomains is defined %}
+        </li>
+    {% endif %}
+
+{% endblock %}
+
+{% block analyzes_menu %}
+
+        {% if analysisProcessCount > 1 %}
+
+        <li class="treeview">
+            {% if processList[0].id == analysisProcess.id %}
+                <a href="#" onclick="$('.processListMenu').removeClass('hide'); $(this).children('span').text('Previous reports');">
+                    <i class="fa fa-pie-chart"></i>
+                    <span>Show previous reports</span>
+                </a>
+            {% else %}
+                <a href="#">
+                    <i class="fa fa-pie-chart"></i>
+                    <span>Previous reports</span>
+                </a>
+            {% endif %}
+            <ul class="processListMenu treeview-menu menu-closed {% if processList[0].id == analysisProcess.id %}hide{% endif %}" style="display: block;">
+                {% for process in processList %}
+                    <li{% if process.id == analysisProcess.id %} class="active" style="background-color: rgb(111, 84, 74);"{% endif %}>
+                        <a href="{{ process.route }}" title="{{ process.created|date("Y-m-d H:i") }}">
+                            <i class="fa fa-{% if process.id == analysisProcess.id %}dot-circle-o{% else %}circle-o{% endif %}"></i>
+                            {{ process.created|date("Y-m-d") }}
+                            <span class="label label-primary pull-right">{{ process.status_label }}</span>
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </li>
+    {% endif %}
+
+{% endblock %}
+
+{% block main_content %}
+    {% if analysisProcessSummary is defined and analysisProcessSummary.analyzedDomains is defined and analysisProcessSummary.analyzedDomains > 0 %}
+        {% include "WebDNAAppBundle:UserWorkbench/Report/partials/table:stats.html.twig" %}
+
+        {% if pageItemAnalyzes is defined %}
+            <form id="domainGroupsForm" method="post" action="{{ path('user_workbench_report_classify_website') }}">
+                <input type="hidden" name="grouped_website_id" value="{% if groupedWebsite is defined and groupedWebsite.id is defined %}{{ groupedWebsite.id }}{% endif %}"/>
+                <input type="hidden" name="website_id" value="{{ website.id }}"/>
+                <input type="hidden" name="analysis_process_id" value="{{ analysisProcess.id }}"/>
+                <input type="hidden" name="class" value=""/>
+                <input type="hidden" name="revert" value=""/>
+            </form>
+            {#
+                {% include "WebDNAAppBundle:UserWorkbench/Report/partials/filters:reportTabs.html.twig" %}
+            #}
+            {% include "WebDNAAppBundle:UserWorkbench/Report/partials/table:dataTable.html.twig" %}
+        {% endif %}
+
+    {% else %}
+        <div class="alert alert-warning">
+            {% if isAnyPendingAnalysis == true %}
+                Analysis in progress
+            {% else %}
+                There are no links for this site.
+            {% endif %}
+        </div>
+
+        <div class="row">
+            <div class="col-md-11 text-center">
+                <a href="{{ path('user_workbench_dashboard_index') }}" class="btn btn-lg btn-primary">
+                    Go to dashboard</a>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block footer_scripts %}
+    {{ parent() }}
+
+    <script>
+        $(document).ready(function () {
+            reportApp.clickDetails();
+            reportApp.classify();
+            reportApp.classifyWebsite();
+            reportApp.handleCriteriaForm();
+        });
+    </script>
+{% endblock %}

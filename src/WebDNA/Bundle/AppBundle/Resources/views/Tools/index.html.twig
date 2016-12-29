@@ -1,0 +1,47 @@
+{% extends '::base.html.twig' %}
+
+{% block meta_title %}Text to HTML ratio checkout tool{% endblock %}
+
+{% block header_scripts %}
+    {{ parent() }}
+
+    {% javascripts
+        '@WebDNAAppBundle/Resources/public/frontend/js/tools.js'
+    %}
+        <script src="{{ asset_url }}" type="text/javascript"></script>
+    {% endjavascripts %}
+{% endblock %}
+
+{% block content %}
+    <section class="header-14-sub bg-gray first-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-8 col-sm-offset-2">
+                    {% include 'WebDNAAppBundle:Tools/headers:' ~ header %}
+                    <div class="row">
+                        <div class="subscribe-form col-sm-8 col-sm-offset-2">
+                            <form id="tool-form" action="{{ url('seo_tools_results') }}" method="POST">
+                                <div class="input-group">
+                                    {{ form_widget(form.url) }}
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-primary" type="submit">Analyze</button>
+                                    </span>
+                                </div>
+                                {{ form_rest(form) }}
+                            </form>
+
+                            <p id="tool-form-preloader" style="display: none;">
+                                <img src="{{ asset('bundles/webdnaapp/frontend/img/loader.gif') }}" />
+                                <small>Please wait, checking page...</small>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="tool-results"></div>
+
+    {% include 'WebDNAAppBundle:Common:betaInvitation.html.twig' %}
+{% endblock %}

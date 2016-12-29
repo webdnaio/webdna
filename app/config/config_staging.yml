@@ -1,0 +1,60 @@
+imports:
+    - { resource: config.yml }
+
+framework:
+    router:
+        resource: "%kernel.root_dir%/config/routing_staging.yml"
+        strict_requirements: true
+    profiler: { only_exceptions: false }
+    ide: "phpstorm://open?file=%%f&line=%%1"
+
+#framework:
+#    validation:
+#        cache: apc
+
+#doctrine:
+#    orm:
+#        metadata_cache_driver: apc
+#        result_cache_driver: apc
+#        query_cache_driver: apc
+
+monolog:
+    handlers:
+        main:
+            type:         fingers_crossed
+            action_level: error
+            handler:      nested
+        nested:
+            type:  stream
+            path:  "%kernel.logs_dir%/%kernel.environment%.log"
+            level: error
+        console:
+            type:  console
+        doctrine:
+            action_level: error
+            type:  stream
+            path:  %kernel.logs_dir%/%kernel.environment%_doctrine.log
+            channels: doctrine
+web_profiler:
+    toolbar: true
+    intercept_redirects: false
+
+# KNPGaufrette Bundle Configuration
+knp_gaufrette:
+    adapters:
+        main:
+            local:
+                directory: %kernel.root_dir%/../web/uploads
+        analysis_process_inputs:
+            aws_s3:
+                service_id: storage.aws_s3.client
+                bucket_name: webdnastorage
+                options:
+                    directory: staging_uploads/analysis_processes/inputs
+    filesystems:
+        main:
+            adapter: main
+            alias:  filesystem_main
+        analysis_process_inputs:
+            adapter: analysis_process_inputs
+            alias:  filesystem_analysis_process_inputs

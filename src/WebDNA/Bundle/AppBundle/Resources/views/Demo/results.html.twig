@@ -1,0 +1,27 @@
+{% extends '::base.html.twig' %}
+
+{% block meta_title %}Discover your website - Results{% endblock %}
+
+{% block content %}
+    <div class="section first ha-waypoint"  data-animate-down="ha-header-color" data-animate-up="ha-header-hide" >
+        <div class="container p-t-30">
+            <div class="p-b-60">
+                <div class="row">
+                    <div class="col-md-6 col-sm-6">
+                        <h1>Results</h1>
+                        <p>Wait for a moment to see results of an analysis.</p>
+                    </div>
+                </div>
+
+                <div class="row p-t-30">
+                    <div class="col-md-6 col-sm-6">
+                        <h3>{{ website.name }}</h3>
+                    </div>
+                    <div class="col-md-6 feature-list">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

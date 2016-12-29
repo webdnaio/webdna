@@ -1,0 +1,20 @@
+{
+  "name": "WebDNA.io",
+  "dependencies": {
+    "admin-lte": "~2.0",
+    "bootstrap": "3.*",
+    "bootstrap-toggle": "~2.2.1",
+    "dropzone": "~4.0.1",
+    "flat-ui": "2.0",
+    "font-awesome": "4.3.*",
+    "handlebars": "~3.0.3",
+    "jquery": "2.1.*",
+    "jquery-cookie": "~1.4.1",
+    "js-cookie": "~2.0.3",
+    "kendo-ui-core": "*",
+    "momentjs": "~2.10.5",
+    "pace": "~1.0.2",
+    "raphael": "~2.1.4",
+    "social-likes": "~3.0.13"
+  }
+}

@@ -1,0 +1,96 @@
+{% extends '::base.html.twig' %}
+
+{% block meta_title %}FAQ{% endblock %}
+
+{% block content %}
+    <section class="blog-1">
+        <div class="title">
+            <div class="container">
+                <h3>Frequently Asked Questions</h3>
+                <div class="submitted">Everything you should know...</div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-3 links">
+                    <div class="tags">
+                        <h6>TOPICS</h6>
+                        <ul>
+                            <li><a href="#what-is-this-tool">What is this tool for?</a></li>
+                            <li><a href="#how-it-can-help-me">How it can help me?</a></li>
+                            <li><a href="#how-to-register">How to register account?</a></li>
+                            <li><a href="#running-analysis-what-next">I've run analysis, what next?</a></li>
+                            <li><a href="#high-volume-analysis">I've got high volume of links to analyse, what should I do? </a></li>
+                            <li><a href="#how-to-upload-links">How can I upload more links?</a></li>
+                            <li><a href="#repeat-analysis">Can I repeat analysis?</a></li>
+                            <li><a href="#backlinks-monitoring">How to enable backlinks monitoring?</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-sm-9">
+                    <h4 id="what-is-this-tool">What is this tool for?</h4>
+                    <p>
+                        WebDNA is a tool designed to improve webmaster’s tasks and help marketing specialists audit their SEO services.
+                        It's main feature is an automatic backlinks quality evaluation. The result can be easily exported as an disavow file you can later upload via Google Webmasters Tools.
+                        Using it a marketing specialist can quickly verify the work of an SEO specialist or agency.
+                    </p>
+
+                    <h4 id="how-it-can-help-me" class="p-t-60">How it can help me?</h4>
+                    <p>
+                        Automatic backlinks quality evaluation can save your time. WebDNA protects your website against potential search engines penalties after an algorithm change.
+                        It monitors inbound links quality and sends you regular feedback on what to improve with your site’s search engine visibility.
+                        If a you got hit by a ban WebDNA is the fastest way to lift it.
+                    </p>
+
+                    <h4 id="how-to-register" class="p-t-60">How to register account?</h4>
+                    <p>
+                        WebDNA beta is free. Visit <a href="{{ url('fos_user_registration_register') }}">register page</a>, fill in the form and confirm the email.
+                        You can also log in with your Facebook or Google account.
+                    </p>
+
+                    <h4 id="running-analysis-what-next" class="p-t-60">I've run analysis, what next?</h4>
+                    <p>
+                        The process depends on the number of links submitted. It may take up to several minutes.
+                        When it’s finished you’ll receive an email update.
+                    </p>
+                    <p>
+                        When ready, you can see the report on your WebDNA account. You can browse throught the result and change some of the suggestions manually.
+                        WebDNA is a machine learning project each correction you make will improve its accuracy.
+                    </p>
+                    <p>
+                        All backlinks marked as negative (whether by the system or manually) will be included in disavow export.
+                    </p>
+
+                    <h4 id="high-volume-analysis" class="p-t-60">I've got high volume of links to analyse, what should I do? </h4>
+                    <p>
+                        If your sample is greater than 15 000 backlinks, please contact us <a href="{{ url('contact_form') }}">here</a>.
+                        We will prioritize your analyse so you can get your results faster.
+                    </p>
+
+                    <h4 id="how-to-upload-links" class="p-t-60">How can I upload more links?</h4>
+                    <p>
+                        You can upload CSV files that contain backlinks to your site from Google Webmaster Tools, Majestic SEO, Bing Webmaster Tools, Ahrefs and others.
+                        If your sample is greater than 15 000 backlinks, please contact us here. We will prioritize your analyse so you get the results faster.
+                    </p>
+
+                    <h4 id="repeat-analysis" class="p-t-60">Can I repeat analysis?</h4>
+                    <p>
+                        Every analysis can be repeated.
+                    </p>
+
+                    <h4 id="backlinks-monitoring" class="p-t-60">How to enable backlinks monitoring?</h4>
+                    <p>
+                        Backlinks monitoring is enabled by default in beta version.
+                    </p>
+
+                    <h4 id="more-questions" class="p-t-60">More questions?</h4>
+                    <p>
+                        If you have any other questions, <a href="{{ url('contact_form') }}">contact us</a> directly.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {% include 'WebDNAAppBundle:Common:betaInvitation.html.twig' %}
+{% endblock %}

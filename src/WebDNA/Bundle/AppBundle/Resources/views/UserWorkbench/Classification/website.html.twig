@@ -1,0 +1,20 @@
+{% extends "WebDNAAppBundle:UserWorkbench/Report:index.html.twig" %}
+
+{% block meta_title %}Web DNA - {{ website.name }} toxic link report{% endblock %}
+
+{% block page_header %}
+    {% if website is defined %}
+        <h1>Toxic link report for {{ website.name }}</h1>
+        <h5>{{ groupedWebsite.name }}</h5>
+    {% endif %}
+{% endblock %}
+
+{% block breadcrumbs %}
+    {{ breadcrumbs.crumb({ 'dashboard_website_check': {'name': website.name, 'active': '1'} }) }}
+{% endblock %}
+
+{% block main_content %}
+    {% if website %}
+        {% include 'WebDNAAppBundle:UserWorkbench/Classification/partials:verdictBox.html.twig' %}
+    {% endif %}
+{% endblock %}

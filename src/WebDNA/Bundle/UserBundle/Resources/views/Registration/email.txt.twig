@@ -1,0 +1,11 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block subject %}WebDNA.io activation link{% endblock %}
+
+{% block body_text %}
+    {% include 'WebDNAUserBundle:Registration:email.body.txt.twig' %}
+{% endblock %}
+
+{% block body_html %}
+    {% include 'WebDNAUserBundle:Registration:email.body.html.twig' %}
+{% endblock %}

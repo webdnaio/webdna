@@ -1,0 +1,65 @@
+{% extends '::base.html.twig' %}
+
+{% block meta_title %}Refund Policy{% endblock %}
+
+{% block content %}
+    <section class="blog-1">
+        <div class="title">
+            <div class="container">
+                <h3>WebDNA.io Refund Policy</h3>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+
+                    <h4 class="p-t-60">
+                        Cancel your WebDNA trial or subscription
+                    </h4>
+
+                    <p>
+                        When you subscribe to WebDNA, your subscription will automatically renew, and you will be
+                        charged at
+                        the start of each billing cycle. You must cancel your subscription before the end of your
+                        current
+                        billing cycle to avoid being charged for the following billing period.
+                    </p>
+
+                    <h4 class="p-t-60">Subscriptions refund and cancellation policy</h4>
+
+                    <p>
+                        Once the monthly subscription fee has been charged at the start of a new billing cycle, you have
+                        7
+                        working days (14 days for users in the European Union) from the start of your first paid billing
+                        cycle to cancel your subscription for a refund.
+                    </p>
+
+                    <p>
+                        When you cancel your subscription, you can continue using your subscription until the end of the
+                        billing period during which you cancel. After the end of that billing period, you won't be able
+                        to
+                        access subscription features or music content. If you don't cancel within the time period
+                        eligible
+                        for a refund, you won't be refunded for the billing period during which you cancel.
+
+                        After you've canceled your account, if you subscribe again, your reports and data will be
+                        restored.
+                    </p>
+
+                    <h4 class="p-t-60">Free trial cancellation policy</h4>
+
+                    <p>
+                        You won't be billed for trying out the services during your introductory trial period. If you
+                        don't
+                        cancel your subscription before the end of that trial, you will start to be billed. Once you’ve
+                        canceled your one-time free trial, your account will no longer have the option to try a
+                        subscription
+                        for free.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {% include 'WebDNAAppBundle:Common:betaInvitation.html.twig' %}
+{% endblock %}

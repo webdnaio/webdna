@@ -1,0 +1,73 @@
+{% extends '::base.html.twig' %}
+
+{% block content %}
+    <section class="content-2">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-4 h6">
+                    <h3>WebDNA.io is a tool designed for</h3>
+
+                    <div class="row">
+                        <div class="col-sm-1"><i class="fui-check"></i></div>
+                        <div class="col-sm-11">Website owners - get to know how the others see you, control your business reputation</div>
+                    </div>
+                    <div class="row p-t-15">
+                        <div class="col-sm-1"><i class="fui-check"></i></div>
+                        <div class="col-sm-11">SEO specialists - create a disavow file with one click and protect your site against spam</div>
+                    </div>
+                    <div class="row p-t-15">
+                        <div class="col-sm-1"><i class="fui-check"></i></div>
+                        <div class="col-sm-11">Marketing specialists - measure the performance of any SEO agency</div>
+                    </div>
+
+                    <div class="btns">
+                        <a class="btn btn-primary btn-clear" href="{{ path('page_about_us') }}">Learn more...</a>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-sm-offset-1">
+                    <div class="embed-container">
+                        <iframe width="640" height="360" src="//www.youtube.com/embed/r-7RC3REwyk?rel=0&cc_load_policy=1" frameborder="0" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="content-26 bg-clouds">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-8 col-sm-offset-2">
+                    <h3>Protect Your Business From Toxic Links</h3>
+
+                    <p class="lead">
+                        WebDNA is a backlink evaluation tool. It helps websites optimize their search engine visibility.
+                        Our algorithm detects potentially toxic links and creates a disavow file, removing spam from
+                        your SEO.  If you got penalized by a search engine, WebDNA will help you quickly lift the ban. It
+                        will also help you prevent potential future bans.
+                    </p>
+                </div>
+            </div>
+            <div class="row features">
+                <div class="col-sm-3">
+                    <img src="{{ asset('bundles/webdnaapp/frontend/startup/common-files/icons/clock@2x.png') }}" alt="" width="100" height="100" />
+                    <h6>Real-time control</h6>
+                    Get an instant alert if a toxic page links to your site. React quickly and enjoy clean and safe SEO.
+                </div>
+                <div class="col-sm-4 col-sm-offset-1">
+                    <img src="{{ asset('bundles/webdnaapp/frontend/startup/common-files/icons/Search@2x.png') }}" alt="" width="106" height="106" />
+                    <h6>Automatic link evaluation</h6>
+                    Save time spent on manual inbound links evaluation and cut your SEO costs.
+                </div>
+                <div class="col-sm-3 col-sm-offset-1">
+                    <img src="{{ asset('bundles/webdnaapp/frontend/startup/common-files/icons/Shield@2x.png') }}" alt="" width="90" height="90" />
+                    <h6>Improve your SERP position</h6>
+                    Analyse your competition and see what can be done to improve your position in the search results.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {% include 'WebDNAAppBundle:Common:testimonials.html.twig' %}
+
+    {% include 'WebDNAAppBundle:Common:betaInvitation.html.twig' with {'backgroundColor': 'rgba(54, 57, 64, 1)', 'fontColor': '#fff'} only %}
+{% endblock %}

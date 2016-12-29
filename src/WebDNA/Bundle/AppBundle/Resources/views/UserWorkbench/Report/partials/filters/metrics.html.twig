@@ -1,0 +1,175 @@
+<ul class="list-inline">
+    {% if criteria.active is defined %}
+        <li>
+            <a href="#" class="resetFilters"><i class="fa fa-times"></i> Clear filters</a>
+        </li>
+    {% endif %}
+    <li>
+        <div class="btn-group">
+            <button onclick="reportApp.loadWebsiteGroups($(this), '{{ analysisProcess.id }}')"
+                    type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                    aria-expanded="false">
+                <i class="fa fa-globe"></i>
+
+                {% if groupedWebsite is not null %}
+                    {{ groupedWebsite.name }}
+                {% else %}
+                    All domains
+                {% endif %}
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu top-websites-list" role="menu">
+                <li>
+                    <a href="{{ path('user_workbench_website_groups', {analysisProcess: analysisProcess.id, website: website.id}) }}"><i
+                                class="fa fa-th-list"></i> Show full domains list <span
+                                class="top-websites-count"></span></a>
+                </li>
+                {% if groupedWebsite is not null %}
+                    <li class="divider"></li>
+                    <li>
+                        <a href="#" onclick="reportApp.clearWebsiteGroupsFilter(); return false;"><i
+                                    class="fa fa-times"></i> Clear domain filter</a>
+                    </li>
+                {% endif %}
+                <li style="padding: 5px 0 5px 20px;" class="top-websites-list-head"><i
+                            class="fa fa-sort-amount-desc"></i> <strong style="padding-left: 8px;">Top 10
+                        domains</strong> <i class="spinner"></i></li>
+                <li></li>
+            </ul>
+        </div>
+    </li>
+
+
+    <li>
+        <div id="filters-btn-group" class="btn-group">
+            <button type="button" class="btn btn-default dropdown-toggle"
+                    data-toggle="dropdown" aria-expanded="false">
+                <i class="fa fa-filter"></i>
+                Filters
+                <span class="caret"></span>
+            </button>
+
+            <div id="filters" class="dropdown-menu hide" role="menu">
+                <div class="row">
+                    <div class="col-md-3">
+                        <label>
+                            Found
+                            <br>
+                            <select name="criteria[foundLinks]">
+                                <option value="1"{% if criteria.foundLinks is defined and criteria.foundLinks == 1 %} selected="selected"{% endif %}>
+                                    yes
+                                </option>
+                                <option value="0"{% if criteria.foundLinks is defined and criteria.foundLinks == 0 %} selected="selected"{% endif %}>
+                                    no
+                                </option>
+                                <option value=""{% if criteria.foundLinks is not defined %} selected="selected"{% endif %}>
+                                    -
+                                </option>
+                            </select>
+                        </label>
+                    </div>
+                    <div class="col-md-3">
+                        <label>
+                            Follow
+                            <br>
+                            <select name="criteria[foundFollow]">
+                                <option value="1"{% if criteria.foundFollow is defined and criteria.foundFollow == 1 %} selected="selected" {% endif %}>
+                                    yes
+                                </option>
+                                <option value="0"{% if criteria.foundFollow is defined and criteria.foundFollow == 0 %} selected="selected"{% endif %}>
+                                    no
+                                </option>
+                                <option value=""{% if criteria.foundFollow is not defined %} selected="selected"{% endif %}>
+                                    -
+                                </option>
+                            </select>
+                        </label>
+                    </div>
+                    <div class="col-md-3">
+                        <label>
+                            Classified
+                            <br>
+                            <select name="criteria[class_user]">
+                                <option value="1"{% if criteria.class_user is defined and criteria.class_user == 1 %} selected="selected"{% endif %}>
+                                    yes
+                                </option>
+                                <option value="0"{% if criteria.class_user is defined and criteria.class_user == 0 %} selected="selected"{% endif %}>
+                                    no
+                                </option>
+                                <option value=""{% if criteria.class_user is not defined %} selected="selected"{% endif %}>
+                                    -
+                                </option>
+                            </select>
+                        </label>
+                    </div>
+                    <div class="col-md-3">
+                        <label>
+                            Reviewed
+                            <br>
+                            <select name="criteria[reviewed]">
+                                <option value="1"{% if criteria.reviewed is defined and criteria.reviewed == 1 %} selected="selected"{% endif %}>
+                                    yes
+                                </option>
+                                <option value="0"{% if criteria.reviewed is defined and criteria.reviewed == 0 %} selected="selected"{% endif %}>
+                                    no
+                                </option>
+                                <option value="2"{% if criteria.reviewed is not defined or criteria.reviewed == 2  %} selected="selected"{% endif %}>
+                                    -
+                                </option>
+                            </select>
+                        </label>
+                    </div>
+                </div>
+                <div class="row">
+                    <hr />
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-md-offset-1 text-center">
+                        <label>
+                            HTTP status code
+                            <br>
+                            <select name="criteria[httpCode]">
+                                <option value="301"{% if criteria.httpCode is defined and criteria.httpCode == 301 %} selected="selected"{% endif %}>
+                                    301
+                                </option>
+                                <option value="404"{% if criteria.httpCode is defined and criteria.httpCode == 404 %} selected="selected"{% endif %}>
+                                    404
+                                </option>
+                                <option value="500"{% if criteria.httpCode is defined and criteria.httpCode == 500 %} selected="selected"{% endif %}>
+                                    500
+                                </option>
+                                <option value=""{% if criteria.httpCode is not defined or criteria.httpCode == ""  %} selected="selected"{% endif %}>
+                                    -
+                                </option>
+                            </select>
+                        </label>
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <label>
+                            malware
+                            <br>
+                            <input type="checkbox" name="criteria[malware]"
+                                   {% if criteria.malware is defined and criteria.malware == 1 %}checked{% endif %}
+                                   value="1"/>
+                        </label>
+                    </div>
+                </div>
+                <div class="row">
+                    <hr />
+                </div>
+                <div class="row">
+                    <div class="col-md-9"></div>
+                    <div class="col-md-1">
+                        <button class="btn btn-primary" style="margin-right: 10px;" type="submit">
+                            Apply
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </li>
+</ul>
+
+
+
+

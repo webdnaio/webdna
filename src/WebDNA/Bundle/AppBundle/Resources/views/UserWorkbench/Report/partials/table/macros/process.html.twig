@@ -1,0 +1,11 @@
+{% macro list(website_id, label = 'previous analysis') %}
+<div class="dropdown">
+    <button class="btn btn-default dropdown-toggle" type="button" data-id="{{ website_id }}" id="dropdownMenu{{ website_id }}" data-toggle="dropdown" aria-expanded="true">
+        {{ label }}
+        <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu{{ website_id }}">
+        <li></li>
+    </ul>
+</div>
+{% endmacro %}

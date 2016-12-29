@@ -1,0 +1,49 @@
+{% macro loop(filters, criteria) %}
+
+    {% for filter in filters %}
+
+        {% set filter_selected = false %}
+
+        {% if criteria[filter.filterName] is defined
+        and criteria[filter.filterName] == filter.filterValue and criteria.active is defined %}
+            {% set filter_selected = true %}
+        {% endif %}
+
+
+        <li>
+            {% if filter_selected %}
+            <b>
+                {% endif %}
+                <input type="hidden" name="criteria[{{ filter.filterName }}]" value="{{ filter.filterValue }}"
+                        {% if filter_selected == false %}
+                            disabled
+                        {% endif %}
+                        />
+                <a href="#"
+                   onclick="
+
+                   {% if filter_selected == true %}
+                           $(this).prev().attr('disabled', true);
+                   {% else %}
+                           $('input[name=' + $(this).prev().attr('name').replace('[', '\\[').replace(']', '\\]') + ']').attr('disabled', true);
+                           $(this).prev().removeAttr('disabled');
+                   {% endif %}
+
+                           $('#criteriaForm').submit(); return false;">
+
+                    {% if filter_selected == true %}
+                        <i class="fa fa-minus-square"></i>
+                    {% else %}
+                        <i class="fa fa-plus-square-o"></i>
+                    {% endif %}
+
+                    {{ filter.label }}
+                </a>
+                {% if filter_selected == true %}
+            </b>
+            {% endif %}
+        </li>
+
+    {% endfor %}
+
+{% endmacro %}

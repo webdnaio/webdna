@@ -1,0 +1,20 @@
+{% stylesheets filter='cssrewrite'
+'bundles/webdnaapp/shared/plugins/social-likes/social-likes_flat.css' %}
+<link rel="stylesheet" href="{{ asset_url }}" type="text/css"/>
+{% endstylesheets %}
+
+{% javascripts 'bundles/webdnaapp/shared/plugins/social-likes/social-likes.min.js' %}
+<script src="{{ asset_url }}" type="text/javascript"></script>
+{% endjavascripts %}
+
+<h3>
+    Tell your friends about WebDNA.io:
+</h3>
+
+<div class="social-likes" data-url="http://webdna.io">
+    <div class="facebook" title="Share link on Facebook">Facebook</div>
+    <div class="twitter" title="Share link on Twitter">Twitter</div>
+    <div class="plusone" title="Share link on Google+">Google+</div>
+</div>
+
+<h3>and subscribe to <a href="http://blog.webdna.io">our blog</a></h3>

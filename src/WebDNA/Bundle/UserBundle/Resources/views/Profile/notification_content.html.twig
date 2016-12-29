@@ -1,0 +1,23 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+<div class="row">
+    <div class="col-md-8 col-md-offset-3">
+        <form action="{{ path('user_profile_notifications') }}" {{ form_enctype(form) }} method="POST"
+              class="fos_user_profile_edit">
+
+            <div class="row">
+                <div class="col-md-8 text-center">
+                    {{ form_row (form._token) }}
+                    {{ form_row(form.emailNotificationsEnabled, { 'label': 'Email notifications' }) }}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-8 text-center" style="margin-bottom: 30px;">
+                    <input type="submit" class="btn btn-lg btn-primary"
+                           value="{{ 'profile.edit.submit'|trans }}"/>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

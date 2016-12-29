@@ -1,0 +1,55 @@
+{% extends '::base.html.twig' %}
+
+{% block content %}
+    <section class="contacts-2 first-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-8">
+                    <h3>Contact Us</h3>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    {% if sent %}
+                        <h4>Thank you!</h4>
+                        <p>Your message has been sent to us, we will reply as soon as it possible.</p>
+                    {% else %}
+                        {% if sent is sameas(false) %}
+                            <h4>Ups, something went really wrong...</h4>
+                            <p>Please, submit your request one more time.</p>
+                        {% endif %}
+                    {% endif %}
+
+                    <form action="" method="post" {{ form_enctype(form) }}>
+                        <label class="h6">Name</label>
+                        {{ form_errors(form.name) }}
+                        {{ form_widget(form.name) }}
+                        <label class="h6">E-mail</label>
+                        {{ form_errors(form.email) }}
+                        {{ form_widget(form.email) }}
+                        <label class="h6">Message</label>
+                        {{ form_errors(form.message) }}
+                        {{ form_widget(form.message) }}
+                        <button type="submit" class="btn btn-primary">Send message</button>
+                        {{ form_rest(form) }}
+                    </form>
+                </div>
+                <div class="col-sm-5 col-sm-offset-1">
+                    <h6>Get in touch</h6>
+                    <p>
+                        Why not drop us a line or pick up the phone and give us a shout.
+                        Our team would love to talk to you and find ways of Making Business Easy.
+                    </p>
+                    <p>
+                        If you have any questions or suggestions, don’t hesitate to write us. We’ll get back to you shortly.
+                    </p>
+                    <div class="links">
+                        <a href="mailto: hello@webdna.io"><span class="fui-mail"></span> hello@webdna.io</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {% include 'WebDNAAppBundle:Common:betaInvitation.html.twig' %}
+{% endblock %}
