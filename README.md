@@ -55,5 +55,5 @@ The system collects and calculates also some additional parameters needed for th
 WebDNA is licensed under LGPL
 https://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
 
-Follow our Twitter 
+Follow us on Twitter 
 https://twitter.com/WebDNAio
