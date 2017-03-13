@@ -51,5 +51,5 @@ The system collects and calculates also some additional parameters needed for th
 - search for the quality websites where your links could be placed.
 
 
-WebDNA is licensed under GPL
-https://opensource.org/licenses/gpl-licen
+WebDNA is licensed under LGPL
+https://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
