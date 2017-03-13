@@ -1,7 +1,8 @@
 # WebDNA.io 
 
+WebDNA.io is non existing SaaS app. 
+Our runway was too short. We've made a ton of mistakes, which I’d like to share with others. Even if only one person could use this knowledge and avoid the traps we fell into, we would be happy that I was able to help. 
 
-WebDNA.io is non existing SaaS app. Our startup runway was to short or we make too many misteakes at once. 
 Since nobody could benefit from our work, WebDNA.io team decided to relase sources of the application to open public domain. 
 
 You can see how WebDNA look like here 
@@ -53,3 +54,6 @@ The system collects and calculates also some additional parameters needed for th
 
 WebDNA is licensed under LGPL
 https://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+
+Follow our Twitter 
+https://twitter.com/WebDNAio
