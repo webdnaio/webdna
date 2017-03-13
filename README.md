@@ -1,9 +1,9 @@
 # WebDNA.io 
 
 WebDNA.io is non existing SaaS app. 
-Our runway was too short. We've made a ton of mistakes, which I’d like to share with others. Even if only one person could use this knowledge and avoid the traps we fell into, we would be happy that I was able to help. 
+Our runway was too short. We've made a ton of mistakes, which I’d like to share with others. Even if only one person could use this knowledge and avoid the traps we fell into, we would be happy.
 
-Since nobody could benefit from our work, WebDNA.io team decided to relase sources of the application to open public domain. 
+Since nobody could benefit from our work, WebDNA.io team decided to relase sources of the application to open public domain under LGPL licence. 
 
 You can see how WebDNA look like here 
 http://blog.webdna.io/check-and-monitor-backlinks/
